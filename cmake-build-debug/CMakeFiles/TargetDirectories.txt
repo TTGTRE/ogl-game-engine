@@ -1,0 +1,3 @@
+C:/Users/Tre/Desktop/C Projects/OGLExperiments/cmake-build-debug/CMakeFiles/OGLExperiments.dir
+C:/Users/Tre/Desktop/C Projects/OGLExperiments/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Tre/Desktop/C Projects/OGLExperiments/cmake-build-debug/CMakeFiles/rebuild_cache.dir
