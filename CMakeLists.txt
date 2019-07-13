@@ -3,7 +3,7 @@ project(OGLExperiments)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(OGLExperiments main.cpp gl_utilities.cpp gl_utilities.h)
+add_executable(OGLExperiments main.cpp gl_utilities.cpp gl_utilities.h cube.cpp cube.h)
 
 set(LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 
@@ -13,4 +13,4 @@ find_library(GLFW libglfw3.a PATHS ${LIB_DIR})
 
 include_directories("include")
 
-target_link_libraries(OGLExperiments ${GLEW} ${GLM} ${GLFW} "glu32" "OpenGL32")
+target_link_libraries(OGLExperiments ${GLEW} ${GLM} ${GLFW} OpenGL32)

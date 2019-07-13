@@ -56,6 +56,12 @@ namespace shader_error_checker {
         }
         return foundError;
     }
+
+    bool get_compile_status(GLuint shader) {
+        GLint status;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+        return status;
+    }
 }
 
 namespace shader_maker {
@@ -76,8 +82,14 @@ namespace shader_maker {
         glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
         glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
 
+
         glCompileShader(vertex_shader);
+        bool vertex_status = shader_error_checker::get_compile_status(vertex_shader);
+        std::cout << "Vertex compile status: " << vertex_status << std::endl;
+
         glCompileShader(fragment_shader);
+        bool fragment_status = shader_error_checker::get_compile_status(fragment_shader);
+        std::cout << "Fragment compile status: " << fragment_status << std::endl;
 
         shader_program = glCreateProgram();
         glAttachShader(shader_program, vertex_shader);
