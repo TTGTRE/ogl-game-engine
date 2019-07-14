@@ -1,5 +1,5 @@
 #version 430
- in vec3 position;
+in vec3 position;
 out vec4 varyingColor;
 uniform mat4 view_matrix;
 uniform mat4 model_matrix;
