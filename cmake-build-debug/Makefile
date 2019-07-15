@@ -122,32 +122,113 @@ OGLExperiments/fast:
 	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/build
 .PHONY : OGLExperiments/fast
 
-gl_utilities.obj: gl_utilities.cpp.obj
+GLUtilities.obj: GLUtilities.cpp.obj
 
-.PHONY : gl_utilities.obj
+.PHONY : GLUtilities.obj
 
 # target to build an object file
-gl_utilities.cpp.obj:
-	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/gl_utilities.cpp.obj
-.PHONY : gl_utilities.cpp.obj
+GLUtilities.cpp.obj:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/GLUtilities.cpp.obj
+.PHONY : GLUtilities.cpp.obj
 
-gl_utilities.i: gl_utilities.cpp.i
+GLUtilities.i: GLUtilities.cpp.i
 
-.PHONY : gl_utilities.i
+.PHONY : GLUtilities.i
 
 # target to preprocess a source file
-gl_utilities.cpp.i:
-	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/gl_utilities.cpp.i
-.PHONY : gl_utilities.cpp.i
+GLUtilities.cpp.i:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/GLUtilities.cpp.i
+.PHONY : GLUtilities.cpp.i
 
-gl_utilities.s: gl_utilities.cpp.s
+GLUtilities.s: GLUtilities.cpp.s
 
-.PHONY : gl_utilities.s
+.PHONY : GLUtilities.s
 
 # target to generate assembly for a file
-gl_utilities.cpp.s:
-	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/gl_utilities.cpp.s
-.PHONY : gl_utilities.cpp.s
+GLUtilities.cpp.s:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/GLUtilities.cpp.s
+.PHONY : GLUtilities.cpp.s
+
+engine/DrawHandle.obj: engine/DrawHandle.cpp.obj
+
+.PHONY : engine/DrawHandle.obj
+
+# target to build an object file
+engine/DrawHandle.cpp.obj:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/DrawHandle.cpp.obj
+.PHONY : engine/DrawHandle.cpp.obj
+
+engine/DrawHandle.i: engine/DrawHandle.cpp.i
+
+.PHONY : engine/DrawHandle.i
+
+# target to preprocess a source file
+engine/DrawHandle.cpp.i:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/DrawHandle.cpp.i
+.PHONY : engine/DrawHandle.cpp.i
+
+engine/DrawHandle.s: engine/DrawHandle.cpp.s
+
+.PHONY : engine/DrawHandle.s
+
+# target to generate assembly for a file
+engine/DrawHandle.cpp.s:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/DrawHandle.cpp.s
+.PHONY : engine/DrawHandle.cpp.s
+
+engine/Model.obj: engine/Model.cpp.obj
+
+.PHONY : engine/Model.obj
+
+# target to build an object file
+engine/Model.cpp.obj:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/Model.cpp.obj
+.PHONY : engine/Model.cpp.obj
+
+engine/Model.i: engine/Model.cpp.i
+
+.PHONY : engine/Model.i
+
+# target to preprocess a source file
+engine/Model.cpp.i:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/Model.cpp.i
+.PHONY : engine/Model.cpp.i
+
+engine/Model.s: engine/Model.cpp.s
+
+.PHONY : engine/Model.s
+
+# target to generate assembly for a file
+engine/Model.cpp.s:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/Model.cpp.s
+.PHONY : engine/Model.cpp.s
+
+engine/ShaderHandle.obj: engine/ShaderHandle.cpp.obj
+
+.PHONY : engine/ShaderHandle.obj
+
+# target to build an object file
+engine/ShaderHandle.cpp.obj:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/ShaderHandle.cpp.obj
+.PHONY : engine/ShaderHandle.cpp.obj
+
+engine/ShaderHandle.i: engine/ShaderHandle.cpp.i
+
+.PHONY : engine/ShaderHandle.i
+
+# target to preprocess a source file
+engine/ShaderHandle.cpp.i:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/ShaderHandle.cpp.i
+.PHONY : engine/ShaderHandle.cpp.i
+
+engine/ShaderHandle.s: engine/ShaderHandle.cpp.s
+
+.PHONY : engine/ShaderHandle.s
+
+# target to generate assembly for a file
+engine/ShaderHandle.cpp.s:
+	$(MAKE) -f CMakeFiles\OGLExperiments.dir\build.make CMakeFiles/OGLExperiments.dir/engine/ShaderHandle.cpp.s
+.PHONY : engine/ShaderHandle.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -185,9 +266,18 @@ help:
 	@echo ... OGLExperiments
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... gl_utilities.obj
-	@echo ... gl_utilities.i
-	@echo ... gl_utilities.s
+	@echo ... GLUtilities.obj
+	@echo ... GLUtilities.i
+	@echo ... GLUtilities.s
+	@echo ... engine/DrawHandle.obj
+	@echo ... engine/DrawHandle.i
+	@echo ... engine/DrawHandle.s
+	@echo ... engine/Model.obj
+	@echo ... engine/Model.i
+	@echo ... engine/Model.s
+	@echo ... engine/ShaderHandle.obj
+	@echo ... engine/ShaderHandle.i
+	@echo ... engine/ShaderHandle.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
