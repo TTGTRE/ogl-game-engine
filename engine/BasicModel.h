@@ -9,8 +9,6 @@ class BasicModel {
 
 public:
 
-    virtual float *getVertices() = 0;
-
 };
 
 #endif //OGLEXPERIMENTS_BASICMODEL_H

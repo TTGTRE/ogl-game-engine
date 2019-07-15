@@ -4,25 +4,10 @@
 #include <glfw3.h>
 #include <ext.hpp>
 #include "gl_utilities.h"
+#include "engine/Cube.h"
 
 const int WINDOW_WIDTH = 500;
 const int WINDOW_HEIGHT = 500;
-
-const int CUBE_VERTICE_COUNT = 108;
-float cube_vertices[108] = {
-        -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0, 1.0f, -1.0f,
-        1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,
-        -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f
-};
 
 GLuint vertex_arrays[1];
 GLuint vertex_buffers[1];
@@ -59,7 +44,8 @@ int main() {
 
     glGenBuffers(1, vertex_buffers);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffers[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::VERTEX_ARRAY), Cube::VERTEX_ARRAY, GL_STATIC_DRAW);
 
     glfwSetKeyCallback(window, key_callback);
 
@@ -106,7 +92,7 @@ int main() {
         glEnable(GL_CULL_FACE);
         glFrontFace(GL_CW);
 
-        glDrawArrays(GL_TRIANGLES, 0, CUBE_VERTICE_COUNT / 3);
+        glDrawArrays(GL_TRIANGLES, 0, sizeof(Cube::VERTEX_ARRAY) / sizeof(*Cube::VERTEX_ARRAY) / 3);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
