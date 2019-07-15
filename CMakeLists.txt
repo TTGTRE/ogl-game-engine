@@ -3,7 +3,7 @@ project(OGLExperiments)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(OGLExperiments main.cpp gl_utilities.cpp gl_utilities.h cube.cpp cube.h)
+add_executable(OGLExperiments main.cpp gl_utilities.cpp gl_utilities.h cube.cpp cube.h engine/ModelBuffer.cpp engine/ModelBuffer.h engine/Cube.cpp engine/Cube.h engine/BasicModel.h)
 
 set(LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 

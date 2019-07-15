@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-#include "GLUtilities.h"
+#include "gl_utilities.h"
 
 using namespace std;
 

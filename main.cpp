@@ -52,7 +52,7 @@ int main() {
 
     glfwSwapInterval(1);
 
-    shader_program = shader_maker::create_shader_program();
+    shader_program = ShaderMaker::createShaderProgram();
 
     glGenVertexArrays(1, vertex_arrays);
     glBindVertexArray(vertex_arrays[0]);

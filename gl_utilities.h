@@ -1,5 +1,5 @@
-#ifndef OGLEXPERIMENTS_GLUTILITIES_H
-#define OGLEXPERIMENTS_GLUTILITIES_H
+#ifndef OGLEXPERIMENTS_GL_UTILITIES_H
+#define OGLEXPERIMENTS_GL_UTILITIES_H
 
 #include <string>
 #include <glew.h>
@@ -21,4 +21,4 @@ namespace ShaderMaker {
     GLuint createShaderProgram();
 }
 
-#endif //OGLEXPERIMENTS_GLUTILITIES_H
+#endif //OGLEXPERIMENTS_GL_UTILITIES_H
