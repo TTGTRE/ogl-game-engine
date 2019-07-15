@@ -1,11 +1,11 @@
 #include <fstream>
 #include <iostream>
-#include "gl_utilities.h"
+#include "GLUtilities.h"
 
 using namespace std;
 
-namespace shader_reader {
-    string read_shader_source(const char *file_path) {
+namespace ShaderReader {
+    string readShaderSource(const char *file_path) {
         string content;
         ifstream file_stream(file_path, ios::in);
         string line = "";
@@ -18,8 +18,8 @@ namespace shader_reader {
     }
 }
 
-namespace shader_error_checker {
-    void print_shader_log(GLuint shader) {
+namespace ShaderErrorChecker {
+    void printShaderLog(GLuint shader) {
         int len = 0;
         int chWrittn = 0;
         char *log;
@@ -33,7 +33,7 @@ namespace shader_error_checker {
 
     }
 
-    void print_program_log(GLuint program) {
+    void printProgramLog(GLuint program) {
         int len = 0;
         int chWrittn = 0;
         char *log;
@@ -46,7 +46,7 @@ namespace shader_error_checker {
         }
     }
 
-    bool check_opengl_error() {
+    bool checkOpenGLError() {
         bool foundError = false;
         int glErr = glGetError();
         while (glErr != GL_NO_ERROR) {
@@ -57,15 +57,15 @@ namespace shader_error_checker {
         return foundError;
     }
 
-    bool get_compile_status(GLuint shader) {
+    bool getCompileStatus(GLuint shader) {
         GLint status;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
         return status;
     }
 }
 
-namespace shader_maker {
-    GLuint create_shader_program() {
+namespace ShaderMaker {
+    GLuint createShaderProgram() {
         GLuint vertex_shader;
         GLuint fragment_shader;
         GLuint shader_program;
@@ -73,8 +73,8 @@ namespace shader_maker {
         vertex_shader = glCreateShader(GL_VERTEX_SHADER);
         fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 
-        std::string vertex_shader_string = shader_reader::read_shader_source("vertex_shader.glsl");
-        std::string fragment_shader_string = shader_reader::read_shader_source("fragment_shader.glsl");
+        std::string vertex_shader_string = ShaderReader::readShaderSource("vertex_shader.glsl");
+        std::string fragment_shader_string = ShaderReader::readShaderSource("fragment_shader.glsl");
 
         const char *vertex_shader_source = vertex_shader_string.c_str();
         const char *fragment_shader_source = fragment_shader_string.c_str();
@@ -84,11 +84,11 @@ namespace shader_maker {
 
 
         glCompileShader(vertex_shader);
-        bool vertex_status = shader_error_checker::get_compile_status(vertex_shader);
+        bool vertex_status = ShaderErrorChecker::getCompileStatus(vertex_shader);
         std::cout << "Vertex compile status: " << vertex_status << std::endl;
 
         glCompileShader(fragment_shader);
-        bool fragment_status = shader_error_checker::get_compile_status(fragment_shader);
+        bool fragment_status = ShaderErrorChecker::getCompileStatus(fragment_shader);
         std::cout << "Fragment compile status: " << fragment_status << std::endl;
 
         shader_program = glCreateProgram();

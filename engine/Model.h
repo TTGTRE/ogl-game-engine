@@ -9,23 +9,23 @@
 #include <ext.hpp>
 #include <iostream>
 
-namespace engine {
-    class model {
+namespace Engine {
+    class Model {
     public:
         float x, y, z;
-        model(float x, float y, float z) : x(x), y(y), z(z) {
+        Model(float x, float y, float z) : x(x), y(y), z(z) {
 
         }
 
-        float loc_x() {
+        float getX() {
             return x;
         }
 
-        float loc_y() {
+        float getY() {
             return y;
         }
 
-        float loc_z() {
+        float getZ() {
             return z;
         }
 
