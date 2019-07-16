@@ -5,24 +5,27 @@
 #include <ext.hpp>
 #include "gl_utilities.h"
 #include "engine/Cube.h"
+#include "engine/ModelBuffer.h"
 
 const int WINDOW_WIDTH = 500;
 const int WINDOW_HEIGHT = 500;
+const int VBO_NUM = 2;
 
 GLuint vertex_arrays[1];
-GLuint vertex_buffers[1];
+GLuint vertex_buffers[VBO_NUM];
 GLuint shader_program;
 
 float cube_x = 0.0f, cube_y = 0.0f, cube_z = -4.0f;
 float view_x = 0.0f, view_y = 0.0f, view_z = 0.0f;
 
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_A && action == GLFW_PRESS) view_x -= 0.10f;
-    if (key == GLFW_KEY_S && action == GLFW_PRESS) view_z += 0.10f;
-    if (key == GLFW_KEY_D && action == GLFW_PRESS) view_x += 0.10f;
-    if (key == GLFW_KEY_W && action == GLFW_PRESS) view_z -= 0.10f;
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) view_y += 0.10f;
-}
+float colorArray[3 * 6] =  {
+    1.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f,
+    1.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f
+};
 
 int main() {
 
@@ -42,12 +45,12 @@ int main() {
     glGenVertexArrays(1, vertex_arrays);
     glBindVertexArray(vertex_arrays[0]);
 
-    glGenBuffers(1, vertex_buffers);
+    glGenBuffers(VBO_NUM, vertex_buffers);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffers[0]);
-
     glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::VERTEX_ARRAY), Cube::VERTEX_ARRAY, GL_STATIC_DRAW);
 
-    glfwSetKeyCallback(window, key_callback);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffers[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(colorArray), colorArray, GL_STATIC_DRAW);
 
     while (!glfwWindowShouldClose(window)) {
 
@@ -57,11 +60,14 @@ int main() {
         glUseProgram(shader_program);
 
         glBindBuffer(GL_ARRAY_BUFFER, vertex_buffers[0]);
-
-        // Letting OpenGL find attribute location
         GLint pos_location = glGetAttribLocation(shader_program, "position");
         glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 0, 0);
         glEnableVertexAttribArray(pos_location);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vertex_buffers[1]);
+        GLint colorLocation = glGetAttribLocation(shader_program, "vColor");
+        glVertexAttribPointer(colorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(colorLocation);
 
         // Define model and view matrix
         glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(cube_x, cube_y, cube_z));

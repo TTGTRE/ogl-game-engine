@@ -1,7 +1,6 @@
 #version 430
-in vec4 varyingColor;
+in vec4 fColor;
 out vec4 color;
 void main(void) {
-//    color = varyingColor;
-    color = vec4(1.0, 0.0, 0.0, 1.0);
+    color = fColor;
 }
