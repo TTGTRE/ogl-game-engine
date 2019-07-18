@@ -5,13 +5,31 @@
 #ifndef OGLEXPERIMENTS_CUBE_H
 #define OGLEXPERIMENTS_CUBE_H
 
-#include "BasicModel.h"
+class Cube {
 
-class Cube : public BasicModel {
+    float x, y, z;
+    float rotation = 0.0f;
+    float scale = 1.0f;
 
 public:
 
     static float VERTEX_ARRAY[108];
+
+    Cube(float x, float y, float z);
+
+    float getX();
+
+    float getY();
+
+    float getZ();
+
+    float getRotation();
+
+    float setRotation(float rotation);
+
+    float getScale();
+
+    float setScale(float scale);
 };
 
 

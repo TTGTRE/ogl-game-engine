@@ -18,7 +18,7 @@ namespace ShaderErrorChecker {
 }
 
 namespace ShaderMaker {
-    GLuint createShaderProgram();
+    GLuint createShaderProgram(const char *vertexPath, const char *fragmentPath);
 }
 
 #endif //OGLEXPERIMENTS_GL_UTILITIES_H

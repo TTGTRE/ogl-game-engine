@@ -65,7 +65,7 @@ namespace ShaderErrorChecker {
 }
 
 namespace ShaderMaker {
-    GLuint createShaderProgram() {
+    GLuint createShaderProgram(const char *vertexPath, const char *fragmentPath) {
         GLuint vertex_shader;
         GLuint fragment_shader;
         GLuint shader_program;
@@ -73,8 +73,8 @@ namespace ShaderMaker {
         vertex_shader = glCreateShader(GL_VERTEX_SHADER);
         fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 
-        std::string vertex_shader_string = ShaderReader::readShaderSource("vertex_shader.glsl");
-        std::string fragment_shader_string = ShaderReader::readShaderSource("fragment_shader.glsl");
+        std::string vertex_shader_string = ShaderReader::readShaderSource(vertexPath);
+        std::string fragment_shader_string = ShaderReader::readShaderSource(fragmentPath);
 
         const char *vertex_shader_source = vertex_shader_string.c_str();
         const char *fragment_shader_source = fragment_shader_string.c_str();
