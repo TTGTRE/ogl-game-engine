@@ -4,7 +4,7 @@
 #include <glfw3.h>
 #include <ext.hpp>
 #include <SOIL2.h>
-#include "gl_utilities.h"
+#include "GLUtilities.h"
 #include "engine/Cube.h"
 #include "engine/Graphics.h"
 #include "engine/Window.h"

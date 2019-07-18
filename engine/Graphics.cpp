@@ -8,7 +8,7 @@
 #include <iostream>
 #include <SOIL2.h>
 #include "Graphics.h"
-#include "../gl_utilities.h"
+#include "../GLUtilities.h"
 
 GLuint textureObj = 0;
 float textureArray[2 * 3] = {
