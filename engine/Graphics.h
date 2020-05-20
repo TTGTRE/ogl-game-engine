@@ -5,7 +5,6 @@
 #ifndef OGLEXPERIMENTS_GRAPHICS_H
 #define OGLEXPERIMENTS_GRAPHICS_H
 
-
 #include <glfw3.h>
 #include <vector>
 #include "Cube.h"

@@ -3,14 +3,12 @@
 //
 
 #include <glew.h>
-#include <cstdlib>
 #include <ext.hpp>
 #include <iostream>
 #include <SOIL2.h>
 #include "Graphics.h"
-#include "../GLUtilities.h"
+#include "GLUtilities.h"
 
-GLuint textureObj = 0;
 float textureArray[2 * 3] = {
         0.0f, 0.0f,
         1.0f, 0.0f,
@@ -27,15 +25,10 @@ Graphics::Graphics(GLFWwindow *window, int width, int height) : window(window), 
 
     glBindBuffer(GL_ARRAY_BUFFER, vbos[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(textureArray), textureArray, GL_STATIC_DRAW);
-
-    textureObj = SOIL_load_OGL_texture("texture.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    if (textureObj == 0) std::cout << "Couldn't find texture." << std::endl;
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textureObj);
 }
 
 void Graphics::createShaderProgram(const char *vertexPath, const char *fragmentPath) {
-    shaderProgram = ShaderMaker::createShaderProgram(vertexPath, fragmentPath); // TODO Allow for more shader programs
+    shaderProgram = ShaderMaker::createShaderProgram(vertexPath, fragmentPath); //TODO Allow for more shader programs
 }
 
 void Graphics::draw(std::vector<Cube *> cubes) {
@@ -43,8 +36,8 @@ void Graphics::draw(std::vector<Cube *> cubes) {
     glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(shaderProgram);
 
-    std::vector<Cube *>::iterator it = cubes.begin();
-    while(it != cubes.end()) {
+    auto it = cubes.begin();
+    while (it != cubes.end()) {
 
         glBindBuffer(GL_ARRAY_BUFFER, vbos[0]);
         GLint pos_location = glGetAttribLocation(shaderProgram, "position");
@@ -57,9 +50,10 @@ void Graphics::draw(std::vector<Cube *> cubes) {
         glEnableVertexAttribArray(texCoordLocation);
 
         // Define model and view matrix
-        glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3((*it)->getX(), (*it)->getY(), (*it)->getZ()));
+        glm::mat4 model_matrix = glm::translate(glm::mat4(1.0f),
+                                                glm::vec3((*it)->getX(), (*it)->getY(), (*it)->getZ()));
         glm::mat4 view_matrix = glm::translate(glm::mat4(1.0f),
-                                               glm::vec3(0.0f, 0.0f, 0.0f)); // TODO Dynamic view location
+                                               glm::vec3(0.0f, 0.0f, 0.0f)); //TODO Dynamic view location
 
         // Define rotation matrix
         glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), (*it)->getRotation(), glm::vec3(0.0, 1.0, 0.0));
@@ -77,11 +71,19 @@ void Graphics::draw(std::vector<Cube *> cubes) {
         glUniformMatrix4fv(rotation_matrix_location, 1, GL_FALSE, glm::value_ptr(rotation_matrix));
         glUniformMatrix4fv(perspective_location, 1, GL_FALSE, glm::value_ptr(perspective_matrix));
 
+        // Set active texture unit
+        glActiveTexture((*it)->getTexture()->getTextureUnit()); //TODO Overload * operator to return the texture unit
+        glBindTexture(GL_TEXTURE_2D, (*it)->getTexture()->getTextureObject());
+        std::cout << "Cube is using texture unit " << (*it)->getTexture()->getTextureUnit() << " with object "
+                  << (*it)->getTexture()->getTextureObject() << std::endl;
+
         // Must enable culling to avoid inside-out objects
         glEnable(GL_CULL_FACE);
         glFrontFace(GL_CW);
 
         glDrawArrays(GL_TRIANGLES, 0, sizeof(Cube::VERTEX_ARRAY) / sizeof(*Cube::VERTEX_ARRAY) / 3);
+
+        std::cout << "Called draw" << std::endl;
 
         it++;
     }

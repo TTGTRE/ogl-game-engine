@@ -5,11 +5,13 @@
 #ifndef OGLEXPERIMENTS_CUBE_H
 #define OGLEXPERIMENTS_CUBE_H
 
+#include "Texture.h"
+
 class Cube {
 
     float x, y, z;
     float rotation = 0.0f;
-    float scale = 1.0f;
+    Texture *texture;
 
 public:
 
@@ -25,11 +27,11 @@ public:
 
     float getRotation();
 
-    float setRotation(float rotation);
+    void setRotation(float rotation);
 
-    float getScale();
+    void setTexture(Texture *texture);
 
-    float setScale(float scale);
+    Texture *getTexture();
 };
 
 
