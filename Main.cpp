@@ -2,15 +2,19 @@
 #include <glfw3.h>
 #include <iostream>
 #include "ShaderUtils.cpp"
+#include "Shape.h"
+#include "Square.h"
 
 #define numVAOs 1
+#define numVBOs 2
 
 GLuint renderingProgram;
 GLuint vao[numVAOs];
+GLuint vbo[numVBOs];
 
 GLuint createShaderProgram() {
-    std::string vShaderSource = ShaderReader::readShaderSource("vertex_shader.glsl");
-    std::string fShaderSource = ShaderReader::readShaderSource("fragment_shader.glsl");
+    std::string vShaderSource = readShaderSource("vertex_shader.glsl");
+    std::string fShaderSource = readShaderSource("fragment_shader.glsl");
 
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -23,15 +27,15 @@ GLuint createShaderProgram() {
     glCompileShader(vShader);
     glCompileShader(fShader);
 
-    ShaderErrorChecker::getCompileStatus(vShader);
-    ShaderErrorChecker::getCompileStatus(fShader);
+    getCompileStatus(vShader);
+    getCompileStatus(fShader);
 
     GLuint vfProgram = glCreateProgram();
     glAttachShader(vfProgram, vShader);
     glAttachShader(vfProgram, fShader);
     glLinkProgram(vfProgram);
 
-    ShaderErrorChecker::checkOpenGLError();
+    checkOpenGLError();
 
     return vfProgram;
 }
@@ -40,10 +44,11 @@ void init(GLFWwindow *window) {
     renderingProgram = createShaderProgram();
     glGenVertexArrays(numVAOs, vao);
     glBindVertexArray(vao[0]);
+    glGenBuffers(numVBOs, vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Square::VERTICES) / sizeof(float), Square::VERTICES, GL_STATIC_DRAW);
 }
 
-float x = 0.0f; //location of triangle on x axis
-float inc = 0.01f; //offset for moving the triangle
 void display(GLFWwindow *window, double currentTime) {
     glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -52,12 +57,11 @@ void display(GLFWwindow *window, double currentTime) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(renderingProgram);
-    x += inc;
-    if (x > 1.0f)inc = -0.01f;
-    if (x < -1.0f)inc = 0.01f; //switch to moving the triangle to the right
-    GLuint offsetLoc = glGetUniformLocation(renderingProgram, "offset"); //get ptr to "offset"
-    glProgramUniform1f(renderingProgram, offsetLoc, x); //send value in "x" to "offset"
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
+
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(Square::VERTICES) / sizeof(float));
 }
 
 int main() {

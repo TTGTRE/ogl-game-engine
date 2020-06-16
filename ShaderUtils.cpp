@@ -5,107 +5,95 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
-using namespace std;
-
-#include <fstream>
-#include <iostream>
 #include <glew.h>
 
 using namespace std;
 
-namespace ShaderReader {
-    string readShaderSource(const char *file_path) {
-        string content;
-        ifstream file_stream(file_path, ios::in);
-        string line = "";
-        while (!file_stream.eof()) {
-            getline(file_stream, line);
-            content.append(line + "\n");
-        }
-        file_stream.close();
-        return content;
+string readShaderSource(const char *file_path) {
+    string content;
+    ifstream file_stream(file_path, ios::in);
+    string line = "";
+    while (!file_stream.eof()) {
+        getline(file_stream, line);
+        content.append(line + "\n");
+    }
+    file_stream.close();
+    return content;
+}
+
+void printShaderLog(GLuint shader) {
+    int len = 0;
+    int chWrittn = 0;
+    char *log;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+    if (len > 0) {
+        log = (char *) malloc(len);
+        glGetShaderInfoLog(shader, len, &chWrittn, log);
+        std::cout << "Shader Info Log: " << log << std::endl;
+        free(log);
+    }
+
+}
+
+void printProgramLog(GLuint program) {
+    int len = 0;
+    int chWrittn = 0;
+    char *log;
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
+    if (len > 0) {
+        log = (char *) malloc(len);
+        glGetProgramInfoLog(program, len, &chWrittn, log);
+        std::cout << "Program Info Log: " << log << std::endl;
+        free(log);
     }
 }
 
-namespace ShaderErrorChecker {
-    void printShaderLog(GLuint shader) {
-        int len = 0;
-        int chWrittn = 0;
-        char *log;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
-        if (len > 0) {
-            log = (char *) malloc(len);
-            glGetShaderInfoLog(shader, len, &chWrittn, log);
-            std::cout << "Shader Info Log: " << log << std::endl;
-            free(log);
-        }
-
+bool checkOpenGLError() {
+    bool foundError = false;
+    int glErr = glGetError();
+    while (glErr != GL_NO_ERROR) {
+        std::cout << "glError: " << glErr << std::endl;
+        foundError = true;
+        glErr = glGetError();
     }
-
-    void printProgramLog(GLuint program) {
-        int len = 0;
-        int chWrittn = 0;
-        char *log;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
-        if (len > 0) {
-            log = (char *) malloc(len);
-            glGetProgramInfoLog(program, len, &chWrittn, log);
-            std::cout << "Program Info Log: " << log << std::endl;
-            free(log);
-        }
-    }
-
-    bool checkOpenGLError() {
-        bool foundError = false;
-        int glErr = glGetError();
-        while (glErr != GL_NO_ERROR) {
-            std::cout << "glError: " << glErr << std::endl;
-            foundError = true;
-            glErr = glGetError();
-        }
-        return foundError;
-    }
-
-    bool getCompileStatus(GLuint shader) {
-        GLint status;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-        return status;
-    }
+    return foundError;
 }
 
-namespace ShaderMaker {
-    GLuint createShaderProgram(const char *vertexPath, const char *fragmentPath) {
-        GLuint vertex_shader;
-        GLuint fragment_shader;
-        GLuint shader_program;
+bool getCompileStatus(GLuint shader) {
+    GLint status;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    return status;
+}
 
-        vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-        fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+GLuint createShaderProgram(const char *vertexPath, const char *fragmentPath) {
+    GLuint vertexShader;
+    GLuint fragmentShader;
+    GLuint shaderProgram;
 
-        std::string vertex_shader_string = ShaderReader::readShaderSource(vertexPath);
-        std::string fragment_shader_string = ShaderReader::readShaderSource(fragmentPath);
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-        const char *vertex_shader_source = vertex_shader_string.c_str();
-        const char *fragment_shader_source = fragment_shader_string.c_str();
+    std::string vertex_shader_string = readShaderSource(vertexPath);
+    std::string fragment_shader_string = readShaderSource(fragmentPath);
 
-        glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
-        glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
+    const char *vertex_shader_source = vertex_shader_string.c_str();
+    const char *fragment_shader_source = fragment_shader_string.c_str();
 
+    glShaderSource(vertexShader, 1, &vertex_shader_source, NULL);
+    glShaderSource(fragmentShader, 1, &fragment_shader_source, NULL);
 
-        glCompileShader(vertex_shader);
-        bool vertex_status = ShaderErrorChecker::getCompileStatus(vertex_shader);
-        std::cout << "Vertex compile status: " << vertex_status << std::endl;
+    glCompileShader(vertexShader);
+    bool vertex_status = getCompileStatus(vertexShader);
+    std::cout << "Vertex compile status: " << vertex_status << std::endl;
 
-        glCompileShader(fragment_shader);
-        bool fragment_status = ShaderErrorChecker::getCompileStatus(fragment_shader);
-        std::cout << "Fragment compile status: " << fragment_status << std::endl;
+    glCompileShader(fragmentShader);
+    bool fragment_status = getCompileStatus(fragmentShader);
+    std::cout << "Fragment compile status: " << fragment_status << std::endl;
 
-        shader_program = glCreateProgram();
-        glAttachShader(shader_program, vertex_shader);
-        glAttachShader(shader_program, fragment_shader);
-        glLinkProgram(shader_program);
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
 
-        return shader_program;
-    }
+    return shaderProgram;
 }
