@@ -46,7 +46,7 @@ void init(GLFWwindow *window) {
     glBindVertexArray(vao[0]);
     glGenBuffers(numVBOs, vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Square::VERTICES) / sizeof(float), Square::VERTICES, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Square::VERTICES), Square::VERTICES, GL_STATIC_DRAW);
 }
 
 void display(GLFWwindow *window, double currentTime) {

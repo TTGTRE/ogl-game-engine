@@ -9,7 +9,7 @@
 
 class Square : Shape {
 public:
-    static float VERTICES[30];
+    static float VERTICES[12];
 public:
     Square(int x, int y);
 
