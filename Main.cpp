@@ -5,24 +5,23 @@
 #include "Shape.h"
 #include "Square.h"
 
-#define numVAOs 1
-#define VBO_MAX 20
-
-char const *SCALE_UNIFORM = "uScale";
-char const *COLOR_UNIFORM = "uColor";
+#define VAO_COUNT 1
+#define VBO_COUNT 20
+#define SCALE_UNIFORM "uScale"
+#define COLOR_UNIFORM "uColor"
 
 GLuint shaderProgram;
-GLuint vao[numVAOs];
+GLuint vaoArray[VAO_COUNT];
 //TODO Could put VBO's in container?
-GLuint vboArray[VBO_MAX];
+GLuint vboArray[VBO_COUNT];
 
 // The total number of shapes in memory
 std::vector<Shape *> shapeVector;
 
 void init(GLFWwindow *window) {
     shaderProgram = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
-    glGenVertexArrays(numVAOs, vao);
-    glBindVertexArray(vao[0]);
+    glGenVertexArrays(VAO_COUNT, vaoArray);
+    glBindVertexArray(vaoArray[0]);
 
     //TODO Populate shape vector
     shapeVector.emplace_back(new Square(1, 1, 0, 1));
@@ -55,7 +54,7 @@ void display(GLFWwindow *window, double currentTime) {
         GLint scaleLocation = glGetUniformLocation(shaderProgram, SCALE_UNIFORM);
         glUniform1f(scaleLocation, shapeVector[i]->getScale());
 
-        GLint colorLocation = glGetUniformLocation(shaderProgram, "uColor");
+        GLint colorLocation = glGetUniformLocation(shaderProgram, COLOR_UNIFORM);
         Triple<float> shapeColor = *(shapeVector[i]->getColor());
         glUniform3f(colorLocation, shapeColor[0], shapeColor[1], shapeColor[2]);
 

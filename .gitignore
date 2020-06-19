@@ -9,3 +9,9 @@
 /include/
 /lib/
 /cmake-build-debug/CMakeFiles/
+/.idea/discord.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/OGLExperiments.iml
+/.idea/vcs.xml
+/.idea/.gitignore
