@@ -16,7 +16,9 @@ class Square : public Shape {
                                           0.5f, 0.5f,
                                           0.5f, -0.5f};
 public:
-    Square(float scale = 1.0f, Color color = BLUE);
+    Square(float scale);
+
+    Square(float red = 1.0, float blue = 1.0, float green = 1.0, float scale = 1.0);
 
     virtual int getVerticeCount() const override;
 };
