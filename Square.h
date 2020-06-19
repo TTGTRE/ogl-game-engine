@@ -7,12 +7,18 @@
 
 #include "Shape.h"
 
-class Square : Shape {
+class Square : public Shape {
+    static int constexpr NUM_VERTICES = 12;
+    float const vertices[NUM_VERTICES] = {-0.5f, 0.5f,
+                                          0.5f, 0.5f,
+                                          -0.5f, -0.5f,
+                                          -0.5f, -0.5f,
+                                          0.5f, 0.5f,
+                                          0.5f, -0.5f};
 public:
-    static float VERTICES[12];
-public:
-    Square(int x, int y);
+    Square(float scale = 1.0f, Color color = BLUE);
 
+    virtual int getVerticeCount() const override;
 };
 
 #endif //OGLEXPERIMENTS_SQUARE_H

@@ -1,52 +1,37 @@
 #include <glew.h>
 #include <glfw3.h>
-#include <iostream>
+#include <vector>
 #include "ShaderUtils.cpp"
 #include "Shape.h"
 #include "Square.h"
 
 #define numVAOs 1
-#define numVBOs 2
+#define VBO_MAX 20
 
-GLuint renderingProgram;
+GLuint shaderProgram;
 GLuint vao[numVAOs];
-GLuint vbo[numVBOs];
+//TODO Could put VBO's in container?
+GLuint vboArray[VBO_MAX];
 
-GLuint createShaderProgram() {
-    std::string vShaderSource = readShaderSource("vertex_shader.glsl");
-    std::string fShaderSource = readShaderSource("fragment_shader.glsl");
-
-    GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-    GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    const char *vshader_str = vShaderSource.c_str();
-    const char *fshader_str = fShaderSource.c_str();
-
-    glShaderSource(vShader, 1, &vshader_str, NULL);
-    glShaderSource(fShader, 1, &fshader_str, NULL);
-    glCompileShader(vShader);
-    glCompileShader(fShader);
-
-    getCompileStatus(vShader);
-    getCompileStatus(fShader);
-
-    GLuint vfProgram = glCreateProgram();
-    glAttachShader(vfProgram, vShader);
-    glAttachShader(vfProgram, fShader);
-    glLinkProgram(vfProgram);
-
-    checkOpenGLError();
-
-    return vfProgram;
-}
+// The total number of shapes in memory
+std::vector<Shape *> shapeVector;
 
 void init(GLFWwindow *window) {
-    renderingProgram = createShaderProgram();
+    shaderProgram = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
     glGenVertexArrays(numVAOs, vao);
     glBindVertexArray(vao[0]);
-    glGenBuffers(numVBOs, vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Square::VERTICES), Square::VERTICES, GL_STATIC_DRAW);
+
+    //TODO Populate shape vector
+    shapeVector.emplace_back(new Square());
+    shapeVector.emplace_back(new Square(0.5f));
+
+    glGenBuffers(shapeVector.size(), vboArray);
+    for (int i = 0; i < shapeVector.size(); i++) {
+        printf("Generating a buffer for shape: %d (%s)", i, typeid(*(shapeVector[i])).name());
+        glBindBuffer(GL_ARRAY_BUFFER, vboArray[i]);
+        glBufferData(GL_ARRAY_BUFFER, shapeVector[i]->getVerticeCount() * sizeof(float), shapeVector[i]->getVertices(),
+                     GL_STATIC_DRAW);
+    }
 }
 
 void display(GLFWwindow *window, double currentTime) {
@@ -56,12 +41,19 @@ void display(GLFWwindow *window, double currentTime) {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(renderingProgram);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(0);
+    glUseProgram(shaderProgram);
 
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(Square::VERTICES) / sizeof(float));
+    for (int i = 0; i < shapeVector.size(); i++) {
+        glBindBuffer(GL_ARRAY_BUFFER, vboArray[i]);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+        glEnableVertexAttribArray(0);
+
+//        glm::vec2 scaled = glm::vec2(1.0f) * glm::vec2(0.5f, 0.5f);
+//        GLint scaleLoc = glGetUniformLocation(shaderProgram, "scale");
+//        glUniform2f(scaleLoc, scaled[0], scaled[1]);
+
+        glDrawArrays(GL_TRIANGLES, 0, shapeVector[i]->getVerticeCount());
+    }
 }
 
 int main() {

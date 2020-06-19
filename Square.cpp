@@ -4,15 +4,8 @@
 
 #include "Square.h"
 
-Square::Square(int x, int y) : Shape(x, y) {
+Square::Square(float scale, Color color) : Shape(vertices, scale, color) {}
 
+int Square::getVerticeCount() const {
+    return NUM_VERTICES;
 }
-
-float Square::VERTICES[12] = {
-        -0.5f, 0.5f,
-        0.5f, 0.5f,
-        -0.5f, -0.5f,
-        -0.5f, -0.5f,
-        0.5f, 0.5f,
-        0.5f, -0.5f
-};

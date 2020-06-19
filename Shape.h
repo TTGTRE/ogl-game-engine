@@ -5,14 +5,20 @@
 #ifndef OGLEXPERIMENTS_SHAPE_H
 #define OGLEXPERIMENTS_SHAPE_H
 
+#include "Color.h"
+
 class Shape {
-    int x, y;
+    float scale;
+    float const *vertices;
+    Color color;
 public:
-    Shape(int x, int y);
+    Shape(float const vertices[], float scale = 1.0f, Color color = BLUE);
 
-    int getX() const;
+    float getScale() const;
 
-    int getY() const;
+    float const *getVertices() const;
+
+    virtual int getVerticeCount() const = 0;
 };
 
 #endif //OGLEXPERIMENTS_SHAPE_H

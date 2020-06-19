@@ -4,14 +4,16 @@
 
 #include "Shape.h"
 
-Shape::Shape(int x, int y) : x(x), y(y) {
+Shape::Shape(float const vertices[], float scale, Color color) : vertices(vertices),
+                                                                 scale(scale),
+                                                                 color(color) {
 
 }
 
-int Shape::getX() const {
-    return x;
+float Shape::getScale() const {
+    return scale;
 }
 
-int Shape::getY() const {
-    return y;
+float const *Shape::getVertices() const {
+    return vertices;
 }
