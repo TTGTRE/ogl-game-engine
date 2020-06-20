@@ -1,6 +1,7 @@
-#include <glew.h>
+#include<glew.h>
 #include <glfw3.h>
 #include <vector>
+#include <SOIL2.h>
 #include "ShaderUtils.cpp"
 #include "Shape.h"
 #include "Square.h"
@@ -8,7 +9,12 @@
 #define VAO_COUNT 1
 #define VBO_COUNT 20
 #define SCALE_UNIFORM "uScale"
-#define COLOR_UNIFORM "uColor"
+
+GLuint loadTexture(char const *texImagePath) {
+    GLuint textureID;
+    textureID = SOIL_load_OGL_texture(texImagePath, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    return textureID;
+}
 
 GLuint shaderProgram;
 GLuint vaoArray[VAO_COUNT];
@@ -18,22 +24,35 @@ GLuint vboArray[VBO_COUNT];
 // The total number of shapes in memory
 std::vector<Shape *> shapeVector;
 
+GLuint spaceTexture;
+
 void init(GLFWwindow *window) {
     shaderProgram = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
     glGenVertexArrays(VAO_COUNT, vaoArray);
     glBindVertexArray(vaoArray[0]);
 
-    //TODO Populate shape vector
     shapeVector.emplace_back(new Square(1, 1, 0, 1));
-    shapeVector.emplace_back(new Square(1, 0, 1, 0.2));
 
-    glGenBuffers(static_cast<GLsizei>(shapeVector.size()), vboArray);
-    for (int i = 0; i < shapeVector.size(); i++) {
-        printf("Generating a buffer for shape: %d (%s)\n", i, typeid(*(shapeVector[i])).name());
-        glBindBuffer(GL_ARRAY_BUFFER, vboArray[i]);
-        glBufferData(GL_ARRAY_BUFFER, shapeVector[i]->getVerticeCount() * sizeof(float), shapeVector[i]->getVertices(),
-                     GL_STATIC_DRAW);
-    }
+    glGenBuffers(2, vboArray);
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[0]);
+    glBufferData(GL_ARRAY_BUFFER, shapeVector[0]->getVerticeCount() * sizeof(float), shapeVector[0]->getVertices(),
+                 GL_STATIC_DRAW);
+
+    float texCoords[] = {
+            // First top left half of square
+            0, 0,
+            1, 0,
+            0, 1,
+            // Second bottom left half of square
+            0, 1,
+            1, 0,
+            1, 1
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+
+    spaceTexture = loadTexture("../res/texture.jpg");
 }
 
 void display(GLFWwindow *window, double currentTime) {
@@ -45,21 +64,18 @@ void display(GLFWwindow *window, double currentTime) {
 
     glUseProgram(shaderProgram);
 
-    for (int i = 0; i < shapeVector.size(); i++) {
-        glBindBuffer(GL_ARRAY_BUFFER, vboArray[i]);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-        glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[0]);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
 
-        //TODO Offload these to a function
-        GLint scaleLocation = glGetUniformLocation(shaderProgram, SCALE_UNIFORM);
-        glUniform1f(scaleLocation, shapeVector[i]->getScale());
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[1]);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(1);
 
-        GLint colorLocation = glGetUniformLocation(shaderProgram, COLOR_UNIFORM);
-        Triple<float> shapeColor = *(shapeVector[i]->getColor());
-        glUniform3f(colorLocation, shapeColor[0], shapeColor[1], shapeColor[2]);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, spaceTexture);
 
-        glDrawArrays(GL_TRIANGLES, 0, shapeVector[i]->getVerticeCount());
-    }
+    glDrawArrays(GL_TRIANGLES, 0, 12);
 }
 
 int main() {

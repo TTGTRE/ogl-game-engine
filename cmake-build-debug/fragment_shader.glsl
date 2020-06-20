@@ -1,7 +1,10 @@
 #version 430
+
 out vec4 color;
-uniform vec3 uColor;
+
+layout(binding = 0) uniform sampler2D samp;
+in vec2 tc;
+
 void main(void){
-    color=vec4(uColor,1);
-//    color=vec4(0,0,1,1);
+    color = texture(samp, tc);
 }

@@ -10,8 +10,6 @@ template<class T>
 struct Triple {
     T first, second, third;
 
-    Triple(T first, T second, T third);
-
     T operator[](int i);
 };
 
