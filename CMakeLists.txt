@@ -3,7 +3,7 @@ project(OGLExperiments)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(OGLExperiments Main.cpp Shape.cpp Square.cpp Triple.cpp)
+add_executable(OGLExperiments Main.cpp Triple.cpp SquareEntity.cpp TextureUtils.h TextureUtils.cpp)
 
 find_library(GLEW glew32.lib lib)
 find_library(GLM glm_static.lib lib)

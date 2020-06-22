@@ -85,15 +85,19 @@ GLuint createShaderProgram(const char *vertexPath, const char *fragmentPath) {
     glCompileShader(vertexShader);
     bool vertex_status = getCompileStatus(vertexShader);
     std::cout << "Vertex compile status: " << vertex_status << std::endl;
+    checkOpenGLError();
 
     glCompileShader(fragmentShader);
     bool fragment_status = getCompileStatus(fragmentShader);
     std::cout << "Fragment compile status: " << fragment_status << std::endl;
+    checkOpenGLError();
 
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
+    checkOpenGLError();
+    printProgramLog(shaderProgram);
 
     return shaderProgram;
 }
