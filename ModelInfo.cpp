@@ -7,8 +7,12 @@
 
 namespace Model {
 
-    static int constexpr SQUARE_VERTEX_BUFFER_INDEX = 0;
-    static int constexpr SQUARE_TEXTURE_BUFFER_INDEX = 1;
+    enum {
+        SQUARE_VERTEX_BUFFER_INDEX,
+        SQUARE_TEXTURE_BUFFER_INDEX,
+        GRID_VERTEX_BUFFER_INDEX
+    };
+
     static int constexpr SQUARE_NUM_VERTICES = 12;
     static int constexpr SQUARE_NUM_TEX_COORDS = 12;
     static float const SQUARE_VERTICES[SQUARE_NUM_VERTICES] = {

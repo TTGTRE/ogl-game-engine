@@ -6,5 +6,6 @@ layout(binding = 0) uniform sampler2D samp;
 in vec2 tc;
 
 void main(void){
-    color = texture(samp, tc);
+    //    color = texture(samp, tc);
+    color = vec4(1.0, 1.0, 1.0, 1.0);
 }

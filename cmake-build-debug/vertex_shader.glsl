@@ -7,6 +7,7 @@ uniform float yPos;
 uniform float scale;
 out vec2 tc;
 void main(void) {
+//    gl_Position = vec4(position, 1.0, 1.0);
     gl_Position=vec4((position.x + xPos) * scale, (position.y + yPos) * scale, 1.0, 1.0);
     tc = texCoord;
 }
