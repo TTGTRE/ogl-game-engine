@@ -10,6 +10,7 @@
 
 #define VAO_COUNT 1
 #define VBO_COUNT 3
+#define COORDINATE_GRID_SCALE 0.1f
 
 GLuint shaderProgram;
 GLuint vaoArray[VAO_COUNT];
@@ -18,9 +19,8 @@ GLuint vboArray[VBO_COUNT];
 std::vector<SquareEntity *> squareEntities;
 std::vector<DrawableObject *> drawableObjects;
 
-float const SCALE = 0.25;
-int const GRID_VERTICE_COUNT = 1.0 / SCALE * 2 * 2;
-int const GRID_VERTICE_BUFFER_SIZE = GRID_VERTICE_COUNT * 2;
+int const GRID_VERTICE_COUNT = 1.0f / COORDINATE_GRID_SCALE * 2 * 2;
+int const GRID_VERTICE_BUFFER_SIZE = GRID_VERTICE_COUNT * 2 * 2;
 float gridVerticeBuffer[GRID_VERTICE_BUFFER_SIZE];
 
 GLint spaceTexture;
@@ -28,7 +28,8 @@ GLint xPosLoc, yPosLoc, scaleLoc;
 
 void init(GLFWwindow *window) {
 
-    printf("The scale is %f\nThe number of grid vertices is %d\nThe size of the grid vertice buffer is: %d\n", SCALE,
+    printf("The scale is %f\nThe number of grid vertices is %d\nThe size of the grid vertice buffer is: %d\n",
+           COORDINATE_GRID_SCALE,
            GRID_VERTICE_COUNT, GRID_VERTICE_BUFFER_SIZE);
 
     shaderProgram = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
@@ -38,8 +39,9 @@ void init(GLFWwindow *window) {
     // Entity loading
     drawableObjects.emplace_back(new LineObject);
 
-    squareEntities.emplace_back(new SquareEntity(2, 2, SCALE));
-    squareEntities.emplace_back(new SquareEntity(1, 0, SCALE));
+    squareEntities.emplace_back(new SquareEntity(2, 2, COORDINATE_GRID_SCALE));
+    squareEntities.emplace_back(new SquareEntity(1, 0, COORDINATE_GRID_SCALE));
+    squareEntities.emplace_back(new SquareEntity(0, 0, COORDINATE_GRID_SCALE));
 
     glGenBuffers(VBO_COUNT, vboArray);
 
@@ -53,9 +55,9 @@ void init(GLFWwindow *window) {
     glBindBuffer(GL_ARRAY_BUFFER, vboArray[Model::GRID_VERTEX_BUFFER_INDEX]);
 
     // Algorithm to generate grid
-    float currentY = 1.0f;
     int c = 1;
-    for (int i = 0; i < GRID_VERTICE_BUFFER_SIZE; i += 2) {
+    float currentY = 1.0f;
+    for (int i = 0; i < GRID_VERTICE_BUFFER_SIZE / 2; i += 2) {
         if (i % 4 == 0) {
             gridVerticeBuffer[i] = -1.0f;
         } else {
@@ -63,10 +65,26 @@ void init(GLFWwindow *window) {
         }
         gridVerticeBuffer[i + 1] = currentY;
         if (c % 2 == 0) {
-            currentY -= SCALE;
+            currentY -= COORDINATE_GRID_SCALE;
         }
         printf("x: %f, y: %f c: %d\n", gridVerticeBuffer[i], gridVerticeBuffer[i + 1], c);
         c++;
+    }
+
+    int d = 1;
+    float currentX = 1.0f;
+    for (int i = GRID_VERTICE_BUFFER_SIZE / 2; i < GRID_VERTICE_BUFFER_SIZE; i += 2) {
+        if (i % 4 == 0) {
+            gridVerticeBuffer[i + 1] = -1.0f;
+        } else {
+            gridVerticeBuffer[i + 1] = 1.0f;
+        }
+        gridVerticeBuffer[i] = currentX;
+        if (d % 2 == 0) {
+            currentX -= COORDINATE_GRID_SCALE;
+        }
+        printf("x : %f, y: %f, d: %d\n", gridVerticeBuffer[i], gridVerticeBuffer[i + 1], d);
+        d++;
     }
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(gridVerticeBuffer), gridVerticeBuffer, GL_STATIC_DRAW);
@@ -101,8 +119,8 @@ void display(GLFWwindow *window, double currentTime) {
     glBindTexture(GL_TEXTURE_2D, spaceTexture);
 
     for (SquareEntity *squareEntity : squareEntities) {
-        glUniform1f(xPosLoc, squareEntity->getX());
-        glUniform1f(yPosLoc, squareEntity->getY());
+        glUniform1f(xPosLoc, squareEntity->getX() - .5f);
+        glUniform1f(yPosLoc, squareEntity->getY() - .5f);
         glUniform1f(scaleLoc, squareEntity->getScale());
         glDrawArrays(GL_TRIANGLES, 0, Model::SQUARE_NUM_VERTICES);
     }

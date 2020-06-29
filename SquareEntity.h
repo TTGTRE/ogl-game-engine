@@ -5,12 +5,11 @@
 #ifndef OGLEXPERIMENTS_SQUAREENTITY_H
 #define OGLEXPERIMENTS_SQUAREENTITY_H
 
-
 class SquareEntity {
     float x, y;
     float scale;
 public:
-    SquareEntity(float x, float y, float scale = 1.0);
+    SquareEntity(float x, float y, float scale);
 
     float getX() const;
 
