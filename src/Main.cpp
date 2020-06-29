@@ -41,7 +41,7 @@ void init(GLFWwindow *window) {
 
     squareEntities.emplace_back(new SquareEntity(2, 2, COORDINATE_GRID_SCALE));
     squareEntities.emplace_back(new SquareEntity(1, 0, COORDINATE_GRID_SCALE));
-    squareEntities.emplace_back(new SquareEntity(0, 0, COORDINATE_GRID_SCALE));
+    squareEntities.emplace_back(new SquareEntity(-1, 0, COORDINATE_GRID_SCALE));
 
     glGenBuffers(VBO_COUNT, vboArray);
 
