@@ -1,7 +1,7 @@
 #include<glew.h>
 #include <glfw3.h>
 #include <vector>
-#include "ShaderUtils.cpp"
+#include "ShaderUtils.h"
 #include "ModelInfo.cpp"
 #include "SquareEntity.h"
 #include "TextureUtils.h"

@@ -2,16 +2,13 @@
 // Created by Tre on 5/20/2020.
 //
 
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <glew.h>
+#include "ShaderUtils.h"
 
 using namespace std;
 
-string readShaderSource(const char *file_path) {
+string readShaderSource(const char *filePath) {
     string content;
-    ifstream file_stream(file_path, ios::in);
+    ifstream file_stream(filePath, ios::in);
     string line = "";
     while (!file_stream.eof()) {
         getline(file_stream, line);
