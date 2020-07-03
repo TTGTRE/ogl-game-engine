@@ -5,7 +5,7 @@
 #ifndef OGLEXPERIMENTS_MODELSQUARE_CPP
 #define OGLEXPERIMENTS_MODELSQUARE_CPP
 
-namespace Model {
+namespace ModelInfo {
 
     enum {
         SQUARE_VERTEX_BUFFER_INDEX,

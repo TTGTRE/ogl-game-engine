@@ -7,6 +7,8 @@
 #include "TextureUtils.h"
 #include "DrawableObject.h"
 #include "LineObject.h"
+#include "model/ModelLoader.h"
+#include "model/Model.h"
 
 #define VAO_COUNT 1
 #define VBO_COUNT 3
@@ -28,6 +30,11 @@ GLint xPosLoc, yPosLoc, scaleLoc;
 
 void init(GLFWwindow *window) {
 
+    ModelLoader modelLoader;
+    Model *squareModel = modelLoader.load("../res/square_model.txt");
+    printf("vertice buffer size: %d, num vertices: %d\n", squareModel->getNumVertices() * sizeof(float),
+           squareModel->getNumVertices());
+
     printf("The scale is %f\nThe number of grid vertices is %d\nThe size of the grid vertice buffer is: %d\n",
            COORDINATE_GRID_SCALE,
            GRID_VERTICE_COUNT, GRID_VERTICE_BUFFER_SIZE);
@@ -46,13 +53,14 @@ void init(GLFWwindow *window) {
     glGenBuffers(VBO_COUNT, vboArray);
 
     // Model loading
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[Model::SQUARE_VERTEX_BUFFER_INDEX]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Model::SQUARE_VERTICES), Model::SQUARE_VERTICES, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::SQUARE_VERTEX_BUFFER_INDEX]);
+    glBufferData(GL_ARRAY_BUFFER, squareModel->getNumVertices() * sizeof(float), squareModel->getVerticeArray(),
+                 GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[Model::SQUARE_TEXTURE_BUFFER_INDEX]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Model::SQUARE_TEX_COORDS), Model::SQUARE_TEX_COORDS, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::SQUARE_TEXTURE_BUFFER_INDEX]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(ModelInfo::SQUARE_TEX_COORDS), ModelInfo::SQUARE_TEX_COORDS, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[Model::GRID_VERTEX_BUFFER_INDEX]);
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::GRID_VERTEX_BUFFER_INDEX]);
 
     // Algorithm to generate grid
     int c = 1;
@@ -67,7 +75,7 @@ void init(GLFWwindow *window) {
         if (c % 2 == 0) {
             currentY -= COORDINATE_GRID_SCALE;
         }
-        printf("x: %f, y: %f c: %d\n", gridVerticeBuffer[i], gridVerticeBuffer[i + 1], c);
+//        printf("x: %f, y: %f c: %d\n", gridVerticeBuffer[i], gridVerticeBuffer[i + 1], c);
         c++;
     }
 
@@ -83,7 +91,7 @@ void init(GLFWwindow *window) {
         if (d % 2 == 0) {
             currentX -= COORDINATE_GRID_SCALE;
         }
-        printf("x : %f, y: %f, d: %d\n", gridVerticeBuffer[i], gridVerticeBuffer[i + 1], d);
+//        printf("x : %f, y: %f, d: %d\n", gridVerticeBuffer[i], gridVerticeBuffer[i + 1], d);
         d++;
     }
 
@@ -122,7 +130,7 @@ void display(GLFWwindow *window, double currentTime) {
         glUniform1f(xPosLoc, squareEntity->getX() - .5f);
         glUniform1f(yPosLoc, squareEntity->getY() - .5f);
         glUniform1f(scaleLoc, squareEntity->getScale());
-        glDrawArrays(GL_TRIANGLES, 0, Model::SQUARE_NUM_VERTICES);
+        glDrawArrays(GL_TRIANGLES, 0, ModelInfo::SQUARE_NUM_VERTICES);
     }
 
     // Get ready to draw grid

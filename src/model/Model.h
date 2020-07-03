@@ -9,11 +9,14 @@
 class Model {
 
     float *verticeArray;
+    int arrayLength;
 
 public:
-    Model(float *verticeArray);
+    Model(float *verticeArray, int arrayLength);
 
     float *getVerticeArray() const;
+
+    int getNumVertices() const;
 };
 
 
