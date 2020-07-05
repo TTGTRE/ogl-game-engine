@@ -44,11 +44,9 @@ void init(GLFWwindow *window) {
     glBindVertexArray(vaoArray[0]);
 
     // Entity loading
-    drawableObjects.emplace_back(new LineObject);
+    drawableObjects.push_back(new LineObject);
 
-    squareEntities.emplace_back(new SquareEntity(2, 2, COORDINATE_GRID_SCALE));
-    squareEntities.emplace_back(new SquareEntity(1, 0, COORDINATE_GRID_SCALE));
-    squareEntities.emplace_back(new SquareEntity(-1, 0, COORDINATE_GRID_SCALE));
+    squareEntities.push_back(new SquareEntity(1, 1, COORDINATE_GRID_SCALE));
 
     glGenBuffers(VBO_COUNT, vboArray);
 
@@ -127,8 +125,8 @@ void display(GLFWwindow *window, double currentTime) {
     glBindTexture(GL_TEXTURE_2D, spaceTexture);
 
     for (SquareEntity *squareEntity : squareEntities) {
-        glUniform1f(xPosLoc, squareEntity->getX() - .5f);
-        glUniform1f(yPosLoc, squareEntity->getY() - .5f);
+        glUniform1f(xPosLoc, squareEntity->getX() - .5f - (1.0f / COORDINATE_GRID_SCALE) + 1);
+        glUniform1f(yPosLoc, -squareEntity->getY() - .5f + (1.0f / COORDINATE_GRID_SCALE));
         glUniform1f(scaleLoc, squareEntity->getScale());
         glDrawArrays(GL_TRIANGLES, 0, ModelInfo::SQUARE_NUM_VERTICES);
     }
