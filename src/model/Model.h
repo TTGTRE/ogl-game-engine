@@ -6,6 +6,8 @@
 #define OGLEXPERIMENTS_MODEL_H
 
 
+#include <glew.h>
+
 class Model {
 
     float *verticeArray;

@@ -5,11 +5,13 @@
 #ifndef OGLEXPERIMENTS_SQUAREENTITY_H
 #define OGLEXPERIMENTS_SQUAREENTITY_H
 
+#include "EngineConstants.h"
+
 class SquareEntity {
     float x, y;
     float scale;
 public:
-    SquareEntity(float x, float y, float scale);
+    SquareEntity(float x, float y, float scale = EngineConstants::COORDINATE_GRID_SCALE);
 
     float getX() const;
 
