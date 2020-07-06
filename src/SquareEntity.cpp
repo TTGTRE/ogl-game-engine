@@ -3,9 +3,13 @@
 //
 
 #include "SquareEntity.h"
+#include "model/ModelLoader.h"
 
-SquareEntity::SquareEntity(float x, float y, float scale) : x(x), y(y), scale(scale) {
-
+SquareEntity::SquareEntity(float x, float y, float scale) : x(x),
+                                                            y(y),
+                                                            scale(scale) {
+    color = new Color(1.0f, 1.0f, 1.0f);
+    model = ModelLoader::load("../res/square_model.txt");
 }
 
 float SquareEntity::getX() const {
@@ -18,4 +22,16 @@ float SquareEntity::getY() const {
 
 float SquareEntity::getScale() const {
     return scale;
+}
+
+Color &SquareEntity::getColor() {
+    return *color;
+}
+
+void SquareEntity::setColor(Color *color) {
+    this->color = color;
+}
+
+Model &SquareEntity::getModel() {
+    return *model;
 }

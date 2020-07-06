@@ -4,7 +4,7 @@ project(OGLExperiments)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(OGLExperiments src/Main.cpp src/Triple.cpp src/SquareEntity.cpp src/TextureUtils.cpp
-        src/ShaderUtils.cpp src/model/ModelLoader.cpp src/model/Model.cpp src/Buffers.h src/EngineConstants.h)
+        src/ShaderUtils.cpp src/model/ModelLoader.cpp src/model/Model.cpp src/Buffers.h src/EngineConstants.h src/Color.cpp src/Color.h)
 
 find_library(GLEW glew32.lib lib)
 find_library(GLM glm_static.lib lib)

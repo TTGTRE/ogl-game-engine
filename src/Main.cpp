@@ -18,7 +18,7 @@ GLuint vboArray[VBO_COUNT];
 std::vector<SquareEntity *> squareEntities;
 
 GLint spaceTexture;
-GLint xPosLoc, yPosLoc, scaleLoc;
+GLint xPosLoc, yPosLoc, scaleLoc, colorLoc;
 
 void init(GLFWwindow *window) {
 
@@ -36,7 +36,9 @@ void init(GLFWwindow *window) {
     glBindVertexArray(vaoArray[0]);
 
     // Entity loading
-    squareEntities.push_back(new SquareEntity(1, 1));
+    auto *square = new SquareEntity(1, 1);
+    square->setColor(new Color(1.0f, 0.0f, 0.0f));
+    squareEntities.push_back(square);
 
     glGenBuffers(VBO_COUNT, vboArray);
 
@@ -59,6 +61,7 @@ void init(GLFWwindow *window) {
     xPosLoc = glGetUniformLocation(shaderProgram, "xPos");
     yPosLoc = glGetUniformLocation(shaderProgram, "yPos");
     scaleLoc = glGetUniformLocation(shaderProgram, "scale");
+    colorLoc = glGetUniformLocation(shaderProgram, "uColor");
 }
 
 void display(GLFWwindow *window, double currentTime) {
@@ -85,6 +88,8 @@ void display(GLFWwindow *window, double currentTime) {
         glUniform1f(xPosLoc, squareEntity->getX() - .5f - (1.0f / EngineConstants::COORDINATE_GRID_SCALE) + 1);
         glUniform1f(yPosLoc, -squareEntity->getY() - .5f + (1.0f / EngineConstants::COORDINATE_GRID_SCALE));
         glUniform1f(scaleLoc, squareEntity->getScale());
+        glUniform3f(colorLoc, squareEntity->getColor().getRed(), squareEntity->getColor().getGreen(),
+                    squareEntity->getColor().getBlue());
         glDrawArrays(GL_TRIANGLES, 0, ModelInfo::SQUARE_NUM_VERTICES);
     }
 
@@ -92,6 +97,7 @@ void display(GLFWwindow *window, double currentTime) {
     glUniform1f(xPosLoc, 0);
     glUniform1f(yPosLoc, 0);
     glUniform1f(scaleLoc, 1);
+    glUniform3f(colorLoc, 1, 1, 1);
 
     glBindBuffer(GL_ARRAY_BUFFER, vboArray[2]);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);

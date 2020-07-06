@@ -8,6 +8,8 @@
 
 template<class T>
 struct Triple {
+    Triple(T first, T second, T third);
+
     T first, second, third;
 
     T operator[](int i);
