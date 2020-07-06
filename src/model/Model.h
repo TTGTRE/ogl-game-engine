@@ -14,6 +14,8 @@ class Model {
     int arrayLength;
 
 public:
+    Model() = default;
+
     Model(float *verticeArray, int arrayLength);
 
     float *getVerticeArray() const;
