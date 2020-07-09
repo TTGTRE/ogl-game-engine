@@ -15,7 +15,7 @@ class SquareEntity {
     float x, y;
     float scale;
     Color color;
-    Model model;
+    Model *model;
 public:
     SquareEntity(float x, float y, float scale = EngineConstants::COORDINATE_GRID_SCALE);
 
@@ -29,7 +29,7 @@ public:
 
     void setColor(Color const &color);
 
-    Model &getModel();
+    Model *getModel();
 };
 
 

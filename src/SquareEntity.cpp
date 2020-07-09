@@ -9,7 +9,7 @@ SquareEntity::SquareEntity(float x, float y, float scale) : x(x),
                                                             y(y),
                                                             scale(scale) {
     color = Color(1.0f, 1.0f, 1.0f);
-    model = *ModelLoader::load("../res/square_model.txt");
+    model = Model::MODEL_VECTOR[0];
 }
 
 float SquareEntity::getX() const {
@@ -32,6 +32,6 @@ void SquareEntity::setColor(Color const &color) {
     this->color = color;
 }
 
-Model &SquareEntity::getModel() {
+Model *SquareEntity::getModel() {
     return model;
 }

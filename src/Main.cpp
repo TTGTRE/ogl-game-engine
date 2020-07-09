@@ -9,23 +9,19 @@
 #include "Buffers.h"
 
 #define VAO_COUNT 1
-#define VBO_COUNT 3
+//#define VBO_COUNT 3
 
 GLuint shaderProgram;
 GLuint vaoArray[VAO_COUNT];
-GLuint vboArray[VBO_COUNT];
+//GLuint vboArray[VBO_COUNT];
 
-std::vector<SquareEntity> squareEntities;
+//TODO Could possibly rename to entities or models
+std::vector<SquareEntity *> squareEntities;
 
 GLint spaceTexture;
 GLint xPosLoc, yPosLoc, scaleLoc, colorLoc;
 
 void init(GLFWwindow *window) {
-
-    ModelLoader modelLoader;
-    Model *squareModel = modelLoader.load("../res/square_model.txt");
-    printf("vertice buffer size: %d, num vertices: %d\n", squareModel->getNumVertices() * sizeof(float),
-           squareModel->getNumVertices());
 
     printf("The scale is %f\nThe number of grid vertices is %d\nThe size of the grid vertice buffer is: %d\n",
            EngineConstants::COORDINATE_GRID_SCALE,
@@ -35,31 +31,31 @@ void init(GLFWwindow *window) {
     glGenVertexArrays(VAO_COUNT, vaoArray);
     glBindVertexArray(vaoArray[0]);
 
-    // Entity loading
-    squareEntities.emplace_back(SquareEntity(1.0f, 1.0f));
-    squareEntities.emplace_back(SquareEntity(10.0f, 10.0f));
-    squareEntities.emplace_back(SquareEntity(12.0f, 15.0f));
-
-    squareEntities[0].setColor(Color(1.0f, 0.0f, 0.0f));
-    squareEntities[1].setColor(Color(0.0f, 0.0f, 1.0f));
-    squareEntities[2].setColor(Color(1.0f, 1.0f, 1.0f));
-
-    glGenBuffers(VBO_COUNT, vboArray);
-
     // Model loading
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::SQUARE_VERTEX_BUFFER_INDEX]);
-    glBufferData(GL_ARRAY_BUFFER, squareModel->getNumVertices() * sizeof(float), squareModel->getVerticeArray(),
-                 GL_STATIC_DRAW);
+    ModelLoader::load("../res/square_model.txt");
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::SQUARE_TEXTURE_BUFFER_INDEX]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ModelInfo::SQUARE_TEX_COORDS), ModelInfo::SQUARE_TEX_COORDS, GL_STATIC_DRAW);
+    // Entity loading
+    squareEntities.emplace_back(new SquareEntity(1.0f, 1.0f));
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::GRID_VERTEX_BUFFER_INDEX]);
-    glBufferData(GL_ARRAY_BUFFER, EngineConstants::GRID_VERTICE_BUFFER_SIZE_BYTES, Buffers::getCoordinateGridBuffer(),
-                 GL_STATIC_DRAW);
+//    squareEntities[0].setColor(Color(1.0f, 0.0f, 0.0f));
+
+//    glGenBuffers(VBO_COUNT, vboArray);
+
+    // Old model loading
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::SQUARE_VERTEX_BUFFER_INDEX]);
+//    glBufferData(GL_ARRAY_BUFFER, squareModel->getNumVertices() * sizeof(float), squareModel->getVerticeArray(),
+//                 GL_STATIC_DRAW);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::SQUARE_TEXTURE_BUFFER_INDEX]);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(ModelInfo::SQUARE_TEX_COORDS), ModelInfo::SQUARE_TEX_COORDS, GL_STATIC_DRAW);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, vboArray[ModelInfo::GRID_VERTEX_BUFFER_INDEX]);
+//    glBufferData(GL_ARRAY_BUFFER, EngineConstants::GRID_VERTICE_BUFFER_SIZE_BYTES, Buffers::getCoordinateGridBuffer(),
+//                 GL_STATIC_DRAW);
 
     // Texture loading
-    spaceTexture = TextureUtils::loadTexture("../res/texture.jpg");
+//    spaceTexture = TextureUtils::loadTexture("../res/texture.jpg");
 
     // Define uniform variables
     xPosLoc = glGetUniformLocation(shaderProgram, "xPos");
@@ -77,36 +73,50 @@ void display(GLFWwindow *window, double currentTime) {
 
     glUseProgram(shaderProgram);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[0]);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(0);
+    // Model class should hold this data?
+//    glBindBuffer(GL_ARRAY_BUFFER, vboArray[0]);
+//    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+//    glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[1]);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(1);
+    //FIXME Could binding this buffer before the model buffer cause an exception?
+    // I don't think so
+//    glBindBuffer(GL_ARRAY_BUFFER, vboArray[1]);
+//    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+//    glEnableVertexAttribArray(1);
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, spaceTexture);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, spaceTexture);
+    for (SquareEntity *entity : squareEntities) {
 
-    for (SquareEntity squareEntity : squareEntities) {
-        glUniform1f(xPosLoc, squareEntity.getX() - .5f - (1.0f / EngineConstants::COORDINATE_GRID_SCALE) + 1);
-        glUniform1f(yPosLoc, -squareEntity.getY() - .5f + (1.0f / EngineConstants::COORDINATE_GRID_SCALE));
-        glUniform1f(scaleLoc, squareEntity.getScale());
-        glUniform3f(colorLoc, squareEntity.getColor().getRed(), squareEntity.getColor().getGreen(),
-                    squareEntity.getColor().getBlue());
-        glDrawArrays(GL_TRIANGLES, 0, ModelInfo::SQUARE_NUM_VERTICES);
+        GLuint bufferIndex = entity->getModel()->getBufferIndex();
+//        glBindBuffer(GL_ARRAY_BUFFER, vboArray[bufferIndex]);
+
+        //TODO Move to prepare() method in SquareEntity
+        glBindBuffer(GL_ARRAY_BUFFER, ModelLoader::vboArray[bufferIndex]);
+
+        glVertexAttribPointer(bufferIndex, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+        glEnableVertexAttribArray(bufferIndex);
+
+        glUniform1f(xPosLoc, entity->getX() - .5f - (1.0f / EngineConstants::COORDINATE_GRID_SCALE) + 1);
+        glUniform1f(yPosLoc, -entity->getY() - .5f + (1.0f / EngineConstants::COORDINATE_GRID_SCALE));
+        glUniform1f(scaleLoc, entity->getScale());
+        glUniform3f(colorLoc, entity->getColor().getRed(), entity->getColor().getGreen(),
+                    entity->getColor().getBlue());
+//        glDrawArrays(GL_TRIANGLES, 0, entity->getModel()->getNumVertices());
+        glDrawArrays(GL_TRIANGLES, 0, 12);
     }
 
     // Get ready to draw grid
-    glUniform1f(xPosLoc, 0);
-    glUniform1f(yPosLoc, 0);
-    glUniform1f(scaleLoc, 1);
-    glUniform3f(colorLoc, 1, 1, 1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[2]);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-
-    glDrawArrays(GL_LINES, 0, EngineConstants::GRID_VERTICE_BUFFER_SIZE);
+//    glUniform1f(xPosLoc, 0);
+//    glUniform1f(yPosLoc, 0);
+//    glUniform1f(scaleLoc, 1);
+//    glUniform3f(colorLoc, 1, 1, 1);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, vboArray[2]);
+//    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+//
+//    glDrawArrays(GL_LINES, 0, EngineConstants::GRID_VERTICE_BUFFER_SIZE);
 }
 
 int main() {
