@@ -3,10 +3,11 @@
 #include <vector>
 #include "ShaderUtils.h"
 #include "ModelInfo.cpp"
-#include "SquareEntity.h"
+#include "Entity.h"
 #include "TextureUtils.h"
 #include "model/ModelLoader.h"
 #include "Buffers.h"
+#include "SquareEntity.h"
 
 #define VAO_COUNT 1
 //#define VBO_COUNT 3
@@ -16,7 +17,7 @@ GLuint vaoArray[VAO_COUNT];
 //GLuint vboArray[VBO_COUNT];
 
 //TODO Could possibly rename to entities or models
-std::vector<SquareEntity *> squareEntities;
+std::vector<Entity *> entities;
 
 GLint spaceTexture;
 GLint xPosLoc, yPosLoc, scaleLoc, colorLoc;
@@ -35,7 +36,7 @@ void init(GLFWwindow *window) {
     ModelLoader::load("../res/square_model.txt");
 
     // Entity loading
-    squareEntities.emplace_back(new SquareEntity(1.0f, 1.0f));
+    entities.emplace_back(new SquareEntity(1.0f, 1.0f));
 
 //    squareEntities[0].setColor(Color(1.0f, 0.0f, 0.0f));
 
@@ -87,7 +88,7 @@ void display(GLFWwindow *window, double currentTime) {
 //    glActiveTexture(GL_TEXTURE0);
 //    glBindTexture(GL_TEXTURE_2D, spaceTexture);
 
-    for (SquareEntity *entity : squareEntities) {
+    for (Entity *entity : entities) {
 
         GLuint bufferIndex = entity->getModel()->getBufferIndex();
 //        glBindBuffer(GL_ARRAY_BUFFER, vboArray[bufferIndex]);
@@ -107,6 +108,8 @@ void display(GLFWwindow *window, double currentTime) {
         glDrawArrays(GL_TRIANGLES, 0, 12);
     }
 
+
+
     // Get ready to draw grid
 //    glUniform1f(xPosLoc, 0);
 //    glUniform1f(yPosLoc, 0);
@@ -115,7 +118,7 @@ void display(GLFWwindow *window, double currentTime) {
 //
 //    glBindBuffer(GL_ARRAY_BUFFER, vboArray[2]);
 //    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-//
+
 //    glDrawArrays(GL_LINES, 0, EngineConstants::GRID_VERTICE_BUFFER_SIZE);
 }
 

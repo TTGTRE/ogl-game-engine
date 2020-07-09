@@ -28,7 +28,7 @@ Model *ModelLoader::load(std::string filePath) {
     stream.close();
     glBindBuffer(GL_ARRAY_BUFFER, vboArray[index]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floatVec->size(), floatVec->data(), GL_STATIC_DRAW);
-    Model *model = new Model(index, floatVec->data(), floatVec->size());
-    index++;
-    return model;
+//    Model *model = new Model(index, floatVec->data(), floatVec->size());
+//    index++;
+    return new Model(index++, floatVec->data(), floatVec->size());
 }
