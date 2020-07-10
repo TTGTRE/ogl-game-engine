@@ -9,14 +9,8 @@
 #include <string>
 #include "Model.h"
 
-#define VBO_COUNT 10
-
 class ModelLoader {
-public:
-    static GLuint vboArray[];
-private:
-    static unsigned int index;
-    static bool initialized;
+    static GLuint index;
 public:
     static Model *load(std::string filePath);
 };

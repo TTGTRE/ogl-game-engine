@@ -12,11 +12,13 @@
 #include "model/Model.h"
 
 class Entity {
+protected:
+    uint8_t modelIndex;
+private:
     float x, y;
     float scale;
     Color color;
-    Model *model;
-
+    Model const *model;
 public:
     float getX() const;
 
@@ -28,13 +30,12 @@ public:
 
     void setColor(Color const &color);
 
-    Model *getModel();
+    Model const *getModel();
 
 protected:
-    Entity(float x, float y, float scale = EngineConstants::COORDINATE_GRID_SCALE);
+    Entity(uint8_t modelIndex, float x, float y, float scale = EngineConstants::COORDINATE_GRID_SCALE);
 
-    //TODO Make this method part of the constructor
-    void setModelIndex(unsigned int index);
+    void setModel(Model const *model);
 };
 
 

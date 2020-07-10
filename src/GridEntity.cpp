@@ -3,3 +3,8 @@
 //
 
 #include "GridEntity.h"
+#include "Buffers.h"
+
+GridEntity::GridEntity() : Entity(1, 0, 0) {
+
+}

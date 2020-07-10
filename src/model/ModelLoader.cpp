@@ -7,16 +7,9 @@
 #include <vector>
 #include "ModelLoader.h"
 
-unsigned int ModelLoader::index = 0;
-
-bool ModelLoader::initialized;
-
-GLuint ModelLoader::vboArray[VBO_COUNT];
+GLuint ModelLoader::index = 0;
 
 Model *ModelLoader::load(std::string filePath) {
-    if (!initialized) {
-        glGenBuffers(VBO_COUNT, vboArray);
-    }
     std::ifstream stream(filePath, std::ios::in);
     if (!stream)
         std::cout << "Error opening file: " << filePath << "\n";
@@ -26,9 +19,5 @@ Model *ModelLoader::load(std::string filePath) {
         floatVec->push_back(f);
     floatVec->shrink_to_fit();
     stream.close();
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[index]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floatVec->size(), floatVec->data(), GL_STATIC_DRAW);
-//    Model *model = new Model(index, floatVec->data(), floatVec->size());
-//    index++;
     return new Model(index++, floatVec->data(), floatVec->size());
 }

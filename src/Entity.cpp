@@ -5,15 +5,12 @@
 #include "Entity.h"
 #include "model/ModelLoader.h"
 
-Entity::Entity(float x, float y, float scale) : x(x),
-                                                y(y),
-                                                scale(scale) {
+Entity::Entity(uint8_t modelIndex, float x, float y, float scale) : modelIndex(modelIndex),
+                                                                    x(x),
+                                                                    y(y),
+                                                                    scale(scale) {
     color = Color(1.0f, 1.0f, 1.0f);
-}
-
-//TODO This method should throw an exception
-void Entity::setModelIndex(unsigned int index) {
-    model = Model::MODEL_VECTOR[index];
+    model = Model::MODEL_VECTOR[modelIndex];
 }
 
 float Entity::getX() const {
@@ -36,6 +33,10 @@ void Entity::setColor(Color const &color) {
     this->color = color;
 }
 
-Model *Entity::getModel() {
+Model const *Entity::getModel() {
     return model;
+}
+
+void Entity::setModel(Model const *model) {
+    this->model = model;
 }

@@ -6,9 +6,12 @@
 #define OGLEXPERIMENTS_GRIDENTITY_H
 
 
-class GridEntity {
+#include "Entity.h"
 
+class GridEntity : public Entity {
 
+public:
+    GridEntity();
 };
 
 
