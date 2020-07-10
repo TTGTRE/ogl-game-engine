@@ -5,21 +5,16 @@
 #include "Entity.h"
 #include "model/ModelLoader.h"
 #include "SquareEntity.h"
-#include "GridEntity.h"
 #include "GLUtilities.h"
 #include "Buffers.h"
 
 #define VAO_COUNT 1
-//#define VBO_COUNT 3
 
 GLuint shaderProgram;
 GLuint vaoArray[VAO_COUNT];
-//GLuint vboArray[VBO_COUNT];
 
-//TODO Could possibly rename to entities or models
 std::vector<Entity *> entities;
 
-GLint spaceTexture;
 GLint xPosLoc, yPosLoc, scaleLoc, colorLoc;
 
 void init(GLFWwindow *window) {
@@ -60,7 +55,6 @@ void display(GLFWwindow *window, double currentTime) {
 
         GLuint bufferIndex = entity->getModel()->getVboIndex();
 
-        //TODO Move to prepare() method in SquareEntity
         glBindBuffer(GL_ARRAY_BUFFER, GLUtilities::vboArray[bufferIndex]);
 
         glVertexAttribPointer(bufferIndex, 2, GL_FLOAT, GL_FALSE, 0, NULL);
