@@ -5,7 +5,7 @@
 #ifndef OGLEXPERIMENTS_VERTEXBUFFERS_H
 #define OGLEXPERIMENTS_VERTEXBUFFERS_H
 
-#include "EngineConstants.h"
+#define GRID_VERTICE_BUFFER_SIZE ((1.0f / WorldProperties::getEntityWorldScale() * 2 * 2) * 2 * 2)
 
 namespace Buffers {
     float *getCoordinateGridBuffer();

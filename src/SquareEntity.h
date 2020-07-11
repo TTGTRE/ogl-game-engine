@@ -10,7 +10,7 @@
 class SquareEntity : public Entity {
 
 public:
-    SquareEntity(float x, float y, float scale = EngineConstants::COORDINATE_GRID_SCALE);
+    SquareEntity(float x, float y, float scale = WorldProperties::getEntityWorldScale());
 };
 
 

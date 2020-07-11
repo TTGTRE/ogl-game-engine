@@ -6,10 +6,10 @@
 #define OGLEXPERIMENTS_ENTITY_H
 
 #include <memory>
-#include "EngineConstants.h"
 #include "Triple.h"
 #include "Color.h"
 #include "model/Model.h"
+#include "WorldProperties.h"
 
 class Entity {
 protected:
@@ -33,7 +33,7 @@ public:
     Model const *getModel();
 
 protected:
-    Entity(uint8_t modelIndex, float x, float y, float scale = EngineConstants::COORDINATE_GRID_SCALE);
+    Entity(uint8_t modelIndex, float x, float y, float scale = WorldProperties::getEntityWorldScale());
 
     void setModel(Model const *model);
 };

@@ -19,9 +19,7 @@ GLint xPosLoc, yPosLoc, scaleLoc, colorLoc;
 
 void init(GLFWwindow *window) {
 
-    printf("The scale is %f\nThe number of grid vertices is %d\nThe size of the grid vertice buffer is: %d\n",
-           EngineConstants::COORDINATE_GRID_SCALE,
-           EngineConstants::GRID_VERTICE_COUNT, EngineConstants::GRID_VERTICE_BUFFER_SIZE);
+    WorldProperties::setEntityWorldScale(0.1f);
 
     shaderProgram = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
     glGenVertexArrays(VAO_COUNT, vaoArray);
@@ -29,11 +27,13 @@ void init(GLFWwindow *window) {
 
     // Model loading
     ModelLoader::load("../res/square_model.txt");
-    new Model(1, Buffers::getCoordinateGridBuffer(), EngineConstants::GRID_VERTICE_BUFFER_SIZE);
 
     // Entity loading
     entities.emplace_back(new SquareEntity(1.0f, 1.0f));
-//    entities.emplace_back(new GridEntity());
+
+    glBindBuffer(GL_ARRAY_BUFFER, GLUtilities::vboArray[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * GRID_VERTICE_BUFFER_SIZE, Buffers::getCoordinateGridBuffer(),
+                 GL_STATIC_DRAW);
 
     // Define uniform variables
     xPosLoc = glGetUniformLocation(shaderProgram, "xPos");
@@ -60,13 +60,23 @@ void display(GLFWwindow *window, double currentTime) {
         glVertexAttribPointer(bufferIndex, 2, GL_FLOAT, GL_FALSE, 0, NULL);
         glEnableVertexAttribArray(bufferIndex);
 
-        glUniform1f(xPosLoc, entity->getX() - .5f - (1.0f / EngineConstants::COORDINATE_GRID_SCALE) + 1);
-        glUniform1f(yPosLoc, -entity->getY() - .5f + (1.0f / EngineConstants::COORDINATE_GRID_SCALE));
+        glUniform1f(xPosLoc, entity->getX() - .5f - (1.0f / WorldProperties::getEntityWorldScale()) + 1);
+        glUniform1f(yPosLoc, -entity->getY() - .5f + (1.0f / WorldProperties::getEntityWorldScale()));
         glUniform1f(scaleLoc, entity->getScale());
         glUniform3f(colorLoc, entity->getColor().getRed(), entity->getColor().getGreen(),
                     entity->getColor().getBlue());
         glDrawArrays(GL_TRIANGLES, 0, entity->getModel()->getNumVertices());
     }
+
+    glUniform1f(xPosLoc, 0);
+    glUniform1f(yPosLoc, 0);
+    glUniform1f(scaleLoc, 1);
+    glUniform3f(colorLoc, 1, 1, 1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, GLUtilities::vboArray[1]);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    glDrawArrays(GL_LINES, 0, GRID_VERTICE_BUFFER_SIZE);
 }
 
 int main() {

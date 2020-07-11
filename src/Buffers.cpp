@@ -3,8 +3,7 @@
 //
 
 #include "Buffers.h"
-
-using namespace EngineConstants;
+#include "WorldProperties.h"
 
 float *Buffers::getCoordinateGridBuffer() {
 
@@ -21,7 +20,7 @@ float *Buffers::getCoordinateGridBuffer() {
         }
         buffer[i + 1] = currentY;
         if (c % 2 == 0) {
-            currentY -= COORDINATE_GRID_SCALE;
+            currentY -= WorldProperties::getEntityWorldScale();
         }
         c++;
     }
@@ -36,7 +35,7 @@ float *Buffers::getCoordinateGridBuffer() {
         }
         buffer[i] = currentX;
         if (d % 2 == 0) {
-            currentX -= COORDINATE_GRID_SCALE;
+            currentX -= WorldProperties::getEntityWorldScale();
         }
         d++;
     }
