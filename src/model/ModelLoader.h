@@ -10,7 +10,7 @@
 #include "Model.h"
 
 class ModelLoader {
-
+    static GLuint index;
 public:
     static Model *load(std::string filePath);
 };

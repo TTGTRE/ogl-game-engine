@@ -9,7 +9,6 @@ namespace EngineConstants {
     float constexpr COORDINATE_GRID_SCALE = 0.1f;
     int constexpr GRID_VERTICE_COUNT = 1.0f / COORDINATE_GRID_SCALE * 2 * 2;
     int constexpr GRID_VERTICE_BUFFER_SIZE = GRID_VERTICE_COUNT * 2 * 2;
-    int constexpr GRID_VERTICE_BUFFER_SIZE_BYTES = GRID_VERTICE_BUFFER_SIZE * sizeof(float);
 }
 
 #endif //OGLEXPERIMENTS_ENGINECONSTANTS_H

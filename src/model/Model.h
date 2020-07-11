@@ -5,22 +5,26 @@
 #ifndef OGLEXPERIMENTS_MODEL_H
 #define OGLEXPERIMENTS_MODEL_H
 
-
 #include <glew.h>
+#include <vector>
 
 class Model {
-
-    float *verticeArray;
-    int arrayLength;
+    GLuint vboIndex;
+    float *bufferData;
+    int arrayLen;
+public:
+    static std::vector<Model *> MODEL_VECTOR;
 
 public:
     Model() = default;
 
-    Model(float *verticeArray, int arrayLength);
+    Model(GLuint vboIndex, float *bufferData, int arrayLen);
 
-    float *getVerticeArray() const;
+    float *getBufferData() const;
 
     int getNumVertices() const;
+
+    GLuint getVboIndex() const;
 };
 
 

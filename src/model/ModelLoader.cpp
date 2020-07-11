@@ -7,6 +7,8 @@
 #include <vector>
 #include "ModelLoader.h"
 
+GLuint ModelLoader::index = 0;
+
 Model *ModelLoader::load(std::string filePath) {
     std::ifstream stream(filePath, std::ios::in);
     if (!stream)
@@ -17,5 +19,5 @@ Model *ModelLoader::load(std::string filePath) {
         floatVec->push_back(f);
     floatVec->shrink_to_fit();
     stream.close();
-    return new Model(floatVec->data(), floatVec->size());
+    return new Model(index++, floatVec->data(), floatVec->size());
 }
