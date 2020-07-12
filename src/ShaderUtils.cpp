@@ -62,7 +62,7 @@ bool getCompileStatus(GLuint shader) {
     return status;
 }
 
-GLuint createShaderProgram(const char *vertexPath, const char *fragmentPath) {
+GLuint createShaderProgram(char const *vertexPath, char const *fragmentPath) {
     GLuint vertexShader;
     GLuint fragmentShader;
     GLuint shaderProgram;
