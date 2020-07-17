@@ -57,8 +57,8 @@ void display(GLFWwindow *window, double currentTime) {
 
         glBindBuffer(GL_ARRAY_BUFFER, GLUtilities::vboArray[bufferIndex]);
 
-        glVertexAttribPointer(bufferIndex, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-        glEnableVertexAttribArray(bufferIndex);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+        glEnableVertexAttribArray(0);
 
         glUniform1f(xPosLoc, entity->getX() - .5f - (1.0f / WorldProperties::getEntityWorldScale()) + 1);
         glUniform1f(yPosLoc, -entity->getY() - .5f + (1.0f / WorldProperties::getEntityWorldScale()));
