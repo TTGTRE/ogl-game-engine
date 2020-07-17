@@ -7,6 +7,7 @@
 
 #include <glew.h>
 #include <vector>
+#include "../engine/Types.h"
 
 class Model {
     GLuint vboIndex;
@@ -18,13 +19,13 @@ public:
 public:
     Model() = default;
 
-    Model(GLuint vboIndex, float *bufferData, int arrayLen);
+    Model(UInt vboIndex, float *bufferData, int arrayLen);
 
     float *getBufferData() const;
 
     int getNumVertices() const;
 
-    GLuint getVboIndex() const;
+    UInt getVboIndex() const;
 };
 
 

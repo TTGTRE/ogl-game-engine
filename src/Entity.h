@@ -9,22 +9,18 @@
 #include "Triple.h"
 #include "Color.h"
 #include "model/Model.h"
-#include "WorldProperties.h"
 
 class Entity {
 protected:
     uint8_t modelIndex;
 private:
     float x, y;
-    float scale;
     Color color;
     Model const *model;
 public:
     float getX() const;
 
     float getY() const;
-
-    float getScale() const;
 
     Color &getColor();
 
@@ -33,7 +29,7 @@ public:
     Model const *getModel();
 
 protected:
-    Entity(uint8_t modelIndex, float x, float y, float scale = WorldProperties::getEntityWorldScale());
+    Entity(uint8_t modelIndex, float x, float y);
 
     void setModel(Model const *model);
 };

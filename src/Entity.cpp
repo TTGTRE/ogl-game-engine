@@ -5,10 +5,9 @@
 #include "Entity.h"
 #include "model/ModelLoader.h"
 
-Entity::Entity(uint8_t modelIndex, float x, float y, float scale) : modelIndex(modelIndex),
+Entity::Entity(uint8_t modelIndex, float x, float y) : modelIndex(modelIndex),
                                                                     x(x),
-                                                                    y(y),
-                                                                    scale(scale) {
+                                                                    y(y) {
     color = Color(1.0f, 1.0f, 1.0f);
     model = Model::MODEL_VECTOR[modelIndex];
 }
@@ -19,10 +18,6 @@ float Entity::getX() const {
 
 float Entity::getY() const {
     return y;
-}
-
-float Entity::getScale() const {
-    return scale;
 }
 
 Color &Entity::getColor() {

@@ -4,6 +4,6 @@
 
 #include "SquareEntity.h"
 
-SquareEntity::SquareEntity(float x, float y, float scale) : Entity(0, x, y, scale) {
+SquareEntity::SquareEntity(float x, float y) : Entity(0, x, y) {
 
 }

@@ -3,14 +3,14 @@
 //
 
 #include "Model.h"
-#include "../GLUtilities.h"
+#include "../engine/OpenGL.h"
 
-Model::Model(GLuint vboIndex, float *bufferData, int arrayLen) : vboIndex(vboIndex),
-                                                                 bufferData(bufferData),
-                                                                 arrayLen(arrayLen) {
+Model::Model(UInt vboIndex, float *bufferData, int arrayLen) : vboIndex(vboIndex),
+                                                               bufferData(bufferData),
+                                                               arrayLen(arrayLen) {
     MODEL_VECTOR.emplace_back(this);
-    GLUtilities::generateBuffers();
-    GLUtilities::fillBuffer(vboIndex, sizeof(float) * arrayLen, bufferData);
+    OpenGL::generateBuffers();
+    OpenGL::fillBuffer(vboIndex, sizeof(float) * arrayLen, bufferData);
 }
 
 float *Model::getBufferData() const {
@@ -21,7 +21,7 @@ int Model::getNumVertices() const {
     return arrayLen;
 }
 
-GLuint Model::getVboIndex() const {
+UInt Model::getVboIndex() const {
     return vboIndex;
 }
 
