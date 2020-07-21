@@ -22,7 +22,7 @@ public:
     explicit Canvas(UInt width, UInt height);
 
     void setScale(float scale);
-    void setColor(Color const &Color);
+    void setColor(Color const &color);
     /**
      * Draw a model on the screen applying x and y transforms to it.
      */
