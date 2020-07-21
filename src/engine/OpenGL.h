@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <string>
+#include <fwd.hpp>
 #include "Types.h"
 
 #define VBO_COUNT 10
@@ -25,8 +26,11 @@ namespace OpenGL {
     namespace Uniform {
         static String X_POS = "xPos";
         static String Y_POS = "yPos";
+        static String WIDTH = "uWidth";
+        static String HEIGHT = "uHeight";
         static String SCALE = "scale";
         static String COLOR = "uColor";
+        static String PROJECTION = "uProjection";
     }
 
     extern Shader vertexShader;
@@ -56,6 +60,9 @@ namespace OpenGL {
 
     template<class T>
     void setUniform(String uniform, float value1, float value2, float value3);
+
+    template<class T>
+    void setUniform(String uniform, glm::mat4 matrix4f);
 }
 
 

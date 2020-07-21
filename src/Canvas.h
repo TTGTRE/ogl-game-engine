@@ -10,6 +10,8 @@
 #include "model/Model.h"
 #include "engine/Types.h"
 #include "Color.h"
+#include "glm.hpp"
+#include "ext.hpp"
 
 class Canvas {
 
@@ -17,6 +19,8 @@ class Canvas {
     UInt height;
     float scale;
     Color color;
+
+    glm::mat4 projectionMatrix;
 
 public:
     explicit Canvas(UInt width, UInt height);
@@ -26,8 +30,7 @@ public:
     /**
      * Draw a model on the screen applying x and y transforms to it.
      */
-    void draw(Model const *model, float x, float y);
-    void drawGrid();
+    void draw(Model const *model, float x, float y, float width, float height);
     void clear();
 
 protected:

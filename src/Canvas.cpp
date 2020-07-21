@@ -9,6 +9,8 @@ Canvas::Canvas(UInt width, UInt height) : width(width), height(height), scale(1.
     OpenGL::setVertexShader("vertex_shader.glsl");
     OpenGL::setFragmentShader("fragment_shader.glsl");
     OpenGL::createShaderProgram();
+
+    projectionMatrix = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 }
 
 void Canvas::setScale(float scale) {
@@ -23,7 +25,7 @@ void Canvas::setColor(Color const &color) {
     this->color = color;
 }
 
-void Canvas::draw(Model const *model, float x, float y) {
+void Canvas::draw(Model const *model, float x, float y, float width, float height) {
     OpenGL::useDefaultShaderProgram();
 
     UInt vboIndex = model->getVboIndex();
@@ -34,8 +36,12 @@ void Canvas::draw(Model const *model, float x, float y) {
 
     OpenGL::setUniform<float>(OpenGL::Uniform::X_POS, x * 2);
     OpenGL::setUniform<float>(OpenGL::Uniform::Y_POS, y * 2);
+    OpenGL::setUniform<float>(OpenGL::Uniform::WIDTH, width);
+    OpenGL::setUniform<float>(OpenGL::Uniform::HEIGHT, height);
     OpenGL::setUniform<float>(OpenGL::Uniform::SCALE, scale);
     OpenGL::setUniform<float>(OpenGL::Uniform::COLOR, color[0], color[1], color[2]);
+    OpenGL::setUniform<glm::mat4>(OpenGL::Uniform::PROJECTION, projectionMatrix);
+
     glDrawArrays(GL_TRIANGLES, 0, model->getNumVertices());
 }
 

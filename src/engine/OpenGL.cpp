@@ -6,6 +6,8 @@
 #include <glew.h>
 #include <iostream>
 #include <fstream>
+#include <detail/type_mat4x4.hpp>
+#include <ext.hpp>
 
 GLuint OpenGL::vboArray[VBO_COUNT];
 bool OpenGL::buffersReady;
@@ -139,4 +141,10 @@ template<>
 void OpenGL::setUniform<float>(String uniform, float value1, float value2, float value3) {
     GLuint location = glGetUniformLocation(shaderProgram, uniform);
     glUniform3f(location, value1, value2, value3);
+}
+
+template<>
+void OpenGL::setUniform<glm::mat4>(String uniform, glm::mat4 matrix4f) {
+    GLuint location = glGetUniformLocation(shaderProgram, uniform);
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix4f));
 }

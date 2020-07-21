@@ -31,8 +31,8 @@ void init(GLFWwindow *window) {
     ModelLoader::load("../res/triangle_model.txt");
 
     // Entity loading
-    entities.emplace_back(new SquareEntity(0.0f, 0.0f));
-    entities.emplace_back(new SquareEntity(1.0f, 1.0f));
+    entities.emplace_back(new SquareEntity(100.0f, 100.0f));
+    entities.emplace_back(new SquareEntity(200.0f, 200.0f));
     entities[1]->setColor(Color(1.0f, 0.0f, 0.0f));
 }
 
@@ -42,7 +42,7 @@ void display(GLFWwindow *window, double currentTime) {
 
     for (Entity *entity : entities) {
         canvas->setColor(entity->getColor());
-        canvas->draw(entity->getModel(), entity->getX(), entity->getY());
+        canvas->draw(entity->getModel(), entity->getX(), entity->getY(), 10, 10);
     }
 }
 
