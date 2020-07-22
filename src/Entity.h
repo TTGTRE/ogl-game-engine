@@ -14,7 +14,10 @@ class Entity {
 protected:
     UInt modelIndex;
 private:
-    float x, y;
+    float x;
+    float y;
+    float width;
+    float height;
     Color color;
     Model const *model;
 public:
@@ -22,14 +25,22 @@ public:
 
     float getY() const;
 
-    Color &getColor();
+    float getWidth() const;
+
+    void setWidth(float width);
+
+    float getHeight() const;
+
+    void setHeight(float height);
+
+    Color const &getColor() const;
 
     void setColor(Color const &color);
 
-    Model const *getModel();
+    Model const *getModel() const;
 
 protected:
-    Entity(UInt modelIndex, float x, float y);
+    Entity(UInt modelIndex, float x, float y, float width, float height);
 
     void setModel(Model const *model);
 };
