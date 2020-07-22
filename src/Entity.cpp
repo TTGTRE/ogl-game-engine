@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "model/ModelLoader.h"
 
-Entity::Entity(uint8_t modelIndex, float x, float y) : modelIndex(modelIndex), x(x), y(y) {
+Entity::Entity(UInt modelIndex, float x, float y) : modelIndex(modelIndex), x(x), y(y) {
     color = Color(1.0f, 1.0f, 1.0f);
     model = Model::MODEL_VECTOR[modelIndex];
 }

@@ -12,7 +12,7 @@
 
 class Entity {
 protected:
-    uint8_t modelIndex;
+    UInt modelIndex;
 private:
     float x, y;
     Color color;
@@ -29,7 +29,7 @@ public:
     Model const *getModel();
 
 protected:
-    Entity(uint8_t modelIndex, float x, float y);
+    Entity(UInt modelIndex, float x, float y);
 
     void setModel(Model const *model);
 };
