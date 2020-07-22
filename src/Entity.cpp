@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "model/ModelLoader.h"
 
-Entity::Entity(uint8_t modelIndex, float x, float y) : modelIndex(modelIndex), x(x), y(y) {
+Entity::Entity(UInt modelIndex, float x, float y, float width, float height) : modelIndex(modelIndex), x(x), y(y), width(width), height(height) {
     color = Color(1.0f, 1.0f, 1.0f);
     model = Model::MODEL_VECTOR[modelIndex];
 }
@@ -18,7 +18,23 @@ float Entity::getY() const {
     return y;
 }
 
-Color &Entity::getColor() {
+float Entity::getWidth() const {
+    return width;
+}
+
+void Entity::setWidth(float width) {
+    this->width = width;
+}
+
+float Entity::getHeight() const {
+    return height;
+}
+
+void Entity::setHeight(float height) {
+    this->height = height;
+}
+
+Color const &Entity::getColor() const {
     return color;
 }
 
@@ -26,7 +42,7 @@ void Entity::setColor(Color const &color) {
     this->color = color;
 }
 
-Model const *Entity::getModel() {
+Model const *Entity::getModel() const {
     return model;
 }
 

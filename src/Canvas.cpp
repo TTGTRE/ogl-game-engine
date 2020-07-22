@@ -17,10 +17,6 @@ void Canvas::setScale(float scale) {
     this->scale = scale;
 }
 
-UInt Canvas::getGridVerticeBufferSize() const {
-    return ((1.0f / scale * 2 * 2) * 2 * 2);
-}
-
 void Canvas::setColor(Color const &color) {
     this->color = color;
 }

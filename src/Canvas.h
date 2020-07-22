@@ -32,9 +32,6 @@ public:
      */
     void draw(Model const *model, float x, float y, float width, float height);
     void clear();
-
-protected:
-    UInt getGridVerticeBufferSize() const;
 };
 
 

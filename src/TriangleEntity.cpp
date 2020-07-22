@@ -4,6 +4,6 @@
 
 #include "TriangleEntity.h"
 
-TriangleEntity::TriangleEntity(float x, float y) : Entity(1, x, y) {
+TriangleEntity::TriangleEntity(float x, float y, float width, float height) : Entity(1, x, y, width, height) {
 
 }
