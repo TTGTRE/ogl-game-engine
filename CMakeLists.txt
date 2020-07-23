@@ -3,8 +3,8 @@ project(OGLExperiments)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(OGLExperiments src/Main.cpp src/Triple.cpp src/Entity.cpp src/TextureUtils.cpp
-        src/model/ModelLoader.cpp src/model/Model.cpp src/Color.cpp src/SquareEntity.cpp src/Canvas.cpp src/Canvas.h src/engine/Types.h src/engine/OpenGL.cpp src/engine/OpenGL.h src/TriangleEntity.cpp src/TriangleEntity.h)
+add_executable(OGLExperiments src/Main.cpp src/engine/Triple.cpp src/engine/Entity.cpp src/engine/TextureUtils.cpp
+        src/engine/buffer/Buffer.cpp src/engine/Color.cpp src/SquareEntity.cpp src/engine/Canvas.cpp src/engine/Canvas.h src/engine/Types.h src/engine/OpenGL.cpp src/engine/OpenGL.h src/TriangleEntity.cpp src/TriangleEntity.h src/engine/texture/Texture.cpp src/engine/texture/Texture.h src/ResourceManager.cpp src/ResourceManager.h src/engine/directory/Model.cpp src/engine/directory/Model.h)
 
 find_library(GLEW glew32.lib lib)
 find_library(GLM glm_static.lib lib)

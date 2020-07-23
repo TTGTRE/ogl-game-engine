@@ -5,7 +5,7 @@
 #ifndef OGLEXPERIMENTS_SQUAREENTITY_H
 #define OGLEXPERIMENTS_SQUAREENTITY_H
 
-#include "Entity.h"
+#include "engine/Entity.h"
 
 class SquareEntity : public Entity {
 

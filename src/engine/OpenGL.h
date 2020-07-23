@@ -10,27 +10,22 @@
 #include <fwd.hpp>
 #include "Types.h"
 
-#define VBO_COUNT 10
+#define VBO_COUNT 50
 
 namespace OpenGL {
 
     extern GLuint vboArray[VBO_COUNT];
     extern bool buffersReady;
+    extern UInt nextIndex;
 
     void generateBuffers();
 
-    void fillBuffer(UInt index, UInt bufferSize, float *bufferData);
-
-    UInt fillLastAvailableBuffer(UInt bufferSize, float *bufferData);
+    UInt fillBuffer(UInt bufferSize, float const *bufferData);
 
     namespace Uniform {
-        static String X_POS = "xPos";
-        static String Y_POS = "yPos";
-        static String WIDTH = "uWidth";
-        static String HEIGHT = "uHeight";
-        static String SCALE = "scale";
         static String COLOR = "uColor";
         static String PROJECTION = "uProjection";
+        static String MODEL = "uModel";
     }
 
     extern Shader vertexShader;

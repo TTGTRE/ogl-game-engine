@@ -6,7 +6,7 @@
 #define OGLEXPERIMENTS_TRIANGLEENTITY_H
 
 
-#include "Entity.h"
+#include "engine/Entity.h"
 
 class TriangleEntity : public Entity {
 public:

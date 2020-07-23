@@ -3,11 +3,17 @@
 //
 
 #include "Entity.h"
-#include "model/ModelLoader.h"
 
-Entity::Entity(UInt modelIndex, float x, float y, float width, float height) : modelIndex(modelIndex), x(x), y(y), width(width), height(height) {
+Entity::Entity(float x, float y, float width, float height) : x(x),
+                                                              y(y),
+                                                              width(width),
+                                                              height(height) {
     color = Color(1.0f, 1.0f, 1.0f);
-    model = Model::MODEL_VECTOR[modelIndex];
+}
+
+Entity::~Entity() {
+    delete model;
+    delete texture;
 }
 
 float Entity::getX() const {
@@ -42,10 +48,14 @@ void Entity::setColor(Color const &color) {
     this->color = color;
 }
 
-Model const *Entity::getModel() const {
-    return model;
+Model &Entity::getModel() const {
+    return *model;
 }
 
-void Entity::setModel(Model const *model) {
+void Entity::setModel(Model *model) {
     this->model = model;
+}
+
+Texture &Entity::getTexture() const {
+    return *texture;
 }

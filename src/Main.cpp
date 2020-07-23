@@ -1,12 +1,11 @@
 #include <glew.h>
 #include <glfw3.h>
 #include <vector>
-#include "Entity.h"
+#include "engine/Entity.h"
 #include "engine/OpenGL.h"
-#include "model/ModelLoader.h"
 #include "SquareEntity.h"
-#include "Canvas.h"
-#include "TriangleEntity.h"
+#include "engine/Canvas.h"
+#include "ResourceManager.h"
 
 #define CANVAS_WIDTH 600
 #define CANVAS_HEIGHT 600
@@ -24,16 +23,13 @@ void init(GLFWwindow *window) {
     glBindVertexArray(vaoArray[0]);
 
     canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    canvas->setScale(0.1f);
 
-    // Model loading
-    ModelLoader::load("../res/square_model.txt");
-    ModelLoader::load("../res/triangle_model.txt");
+    // Model loading & texture loading
+    ResourceManager::loadResources();
 
     // Entity loading
-    entities.emplace_back(new SquareEntity(100.0f, 100.0f, 50, 80));
-    entities.emplace_back(new SquareEntity(200.0f, 200.0f, 180, 90));
-    entities[1]->setColor(Color(1.0f, 0.0f, 0.0f));
+    entities.emplace_back(new SquareEntity(100, 100, 50, 50));
+    entities.emplace_back(new SquareEntity(100, 400, 200, 50));
 }
 
 void display(GLFWwindow *window, double currentTime) {

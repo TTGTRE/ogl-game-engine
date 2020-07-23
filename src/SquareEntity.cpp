@@ -3,7 +3,8 @@
 //
 
 #include "SquareEntity.h"
+#include "ResourceManager.h"
 
-SquareEntity::SquareEntity(float x, float y, float width, float height) : Entity(0, x, y, width, height) {
-
+SquareEntity::SquareEntity(float x, float y, float width, float height) : Entity(x, y, width, height) {
+    setModel(ResourceManager::SQUARE_MODEL);
 }

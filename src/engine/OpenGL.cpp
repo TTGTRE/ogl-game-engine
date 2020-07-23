@@ -11,6 +11,7 @@
 
 GLuint OpenGL::vboArray[VBO_COUNT];
 bool OpenGL::buffersReady;
+UInt OpenGL::nextIndex;
 
 Shader OpenGL::vertexShader;
 Shader OpenGL::fragmentShader;
@@ -23,21 +24,10 @@ void OpenGL::generateBuffers() {
     }
 }
 
-void OpenGL::fillBuffer(UInt index, UInt bufferSize, float *bufferData) {
-    glBindBuffer(GL_ARRAY_BUFFER, vboArray[index]);
+UInt OpenGL::fillBuffer(UInt bufferSize, float const *bufferData) {
+    glBindBuffer(GL_ARRAY_BUFFER, vboArray[nextIndex]);
     glBufferData(GL_ARRAY_BUFFER, bufferSize, bufferData, GL_STATIC_DRAW);
-}
-
-UInt OpenGL::fillLastAvailableBuffer(UInt bufferSize, float *bufferData) {
-    UInt bufferIndex;
-    for (bufferIndex = VBO_COUNT - 1; bufferIndex > 0; bufferIndex--) {
-        if (vboArray[bufferIndex] == 0) {
-            fillBuffer(bufferIndex, bufferSize, bufferData);
-            return bufferIndex;
-        }
-    }
-    std::cout << "No available buffers." << std::endl;
-    exit(EXIT_SUCCESS);
+    return nextIndex++;
 }
 
 void OpenGL::setVertexShader(String path) {
@@ -65,7 +55,7 @@ void OpenGL::setFragmentShader(String path) {
 std::string OpenGL::readShaderSource(const char *filePath) {
     std::string content;
     std::ifstream file_stream(filePath, std::ios::in);
-    std::string line = "";
+    std::string line;
     while (!file_stream.eof()) {
         getline(file_stream, line);
         content.append(line + "\n");

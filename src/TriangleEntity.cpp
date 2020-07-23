@@ -3,7 +3,8 @@
 //
 
 #include "TriangleEntity.h"
+#include "ResourceManager.h"
 
-TriangleEntity::TriangleEntity(float x, float y, float width, float height) : Entity(1, x, y, width, height) {
-
+TriangleEntity::TriangleEntity(float x, float y, float width, float height) : Entity(x, y, width, height) {
+    setModel(ResourceManager::TRIANGLE_MODEL);
 }

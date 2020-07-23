@@ -8,19 +8,21 @@
 #include <memory>
 #include "Triple.h"
 #include "Color.h"
-#include "model/Model.h"
+#include "buffer/Buffer.h"
+#include "texture/Texture.h"
+#include "directory/Model.h"
 
 class Entity {
-protected:
-    UInt modelIndex;
-private:
     float x;
     float y;
     float width;
     float height;
     Color color;
-    Model const *model;
+    Model *model;
+    Texture *texture;
 public:
+    ~Entity();
+
     float getX() const;
 
     float getY() const;
@@ -37,12 +39,15 @@ public:
 
     void setColor(Color const &color);
 
-    Model const *getModel() const;
+    Model &getModel() const;
+
+    void setModel(Model *model);
+
+    Texture &getTexture() const;
+
 
 protected:
-    Entity(UInt modelIndex, float x, float y, float width, float height);
-
-    void setModel(Model const *model);
+    Entity(float x, float y, float width, float height);
 };
 
 
