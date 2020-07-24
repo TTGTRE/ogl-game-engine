@@ -10,7 +10,7 @@
 #include "Color.h"
 #include "buffer/Buffer.h"
 #include "texture/Texture.h"
-#include "directory/Model.h"
+#include "model/Model.h"
 
 class Entity {
     float x;

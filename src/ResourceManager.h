@@ -8,15 +8,13 @@
 
 #include "engine/buffer/Buffer.h"
 #include "engine/texture/Texture.h"
-#include "engine/directory/Model.h"
+#include "engine/model/Model.h"
 
 class ResourceManager {
 public:
     static void loadResources();
     static Model *SQUARE_MODEL;
     static Model *TRIANGLE_MODEL;
-    static Buffer *SQUARE_TEX_COORDS;
-    static Buffer *TRIANGLE_TEX_COORDS;
     static Texture *SPACE_TEXTURE;
     static Texture *STARS_TEXTURE;
 };

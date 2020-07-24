@@ -12,7 +12,7 @@
 #include "glm.hpp"
 #include "ext.hpp"
 #include "buffer/Buffer.h"
-#include "directory/Model.h"
+#include "model/Model.h"
 
 class Canvas {
 

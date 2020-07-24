@@ -10,14 +10,12 @@
 #include "../texture/Texture.h"
 
 class Model {
-    Buffer *vertices;
-    Buffer *textureCoords;
+    Buffer *data;
     Texture *texture;
 public:
-    Model(Buffer *vertices, Buffer *textureCoords, Texture *texture);
+    Model(Buffer *data, Texture *texture);
     ~Model();
-    Buffer &getVertices() const;
-    Buffer &getTextureCoords() const;
+    Buffer &getData() const;
     Texture &getTexture() const;
 };
 
