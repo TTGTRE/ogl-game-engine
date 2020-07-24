@@ -7,4 +7,5 @@
 
 SquareEntity::SquareEntity(float x, float y, float width, float height) : Entity(x, y, width, height) {
     setModel(ResourceManager::SQUARE_MODEL);
+    setTexture(*ResourceManager::SPACE_TEXTURE);
 }

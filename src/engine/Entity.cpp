@@ -59,3 +59,7 @@ void Entity::setModel(Model *model) {
 Texture &Entity::getTexture() const {
     return *texture;
 }
+
+void Entity::setTexture(Texture &texture) {
+    this->texture = &texture;
+}

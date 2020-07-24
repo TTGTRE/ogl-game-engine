@@ -38,6 +38,7 @@ void display(GLFWwindow *window, double currentTime) {
 
     for (Entity *entity : entities) {
         canvas->setColor(entity->getColor());
+        canvas->setTexture(entity->getTexture());
         canvas->draw(entity->getModel(), entity->getX(), entity->getY(), entity->getWidth(), entity->getHeight());
     }
 }

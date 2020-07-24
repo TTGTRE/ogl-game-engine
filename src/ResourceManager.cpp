@@ -7,8 +7,8 @@
 void ResourceManager::loadResources() {
     SPACE_TEXTURE = Texture::load("../res/texture.jpg");
     STARS_TEXTURE = Texture::load("../res/texture2.jpg");
-    SQUARE_MODEL = new Model(Buffer::load("../res/square_model.txt"), SPACE_TEXTURE);
-    TRIANGLE_MODEL = new Model(Buffer::load("../res/triangle_model.txt"), STARS_TEXTURE);
+    SQUARE_MODEL = new Model(Buffer::load("../res/square_model.txt"));
+    TRIANGLE_MODEL = new Model(Buffer::load("../res/triangle_model.txt"));
 }
 
 Model *ResourceManager::SQUARE_MODEL = nullptr;

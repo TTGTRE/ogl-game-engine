@@ -11,12 +11,10 @@
 
 class Model {
     Buffer *data;
-    Texture *texture;
 public:
-    Model(Buffer *data, Texture *texture);
+    Model(Buffer *data);
     ~Model();
     Buffer &getData() const;
-    Texture &getTexture() const;
 };
 
 

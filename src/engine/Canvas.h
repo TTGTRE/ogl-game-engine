@@ -13,22 +13,26 @@
 #include "ext.hpp"
 #include "buffer/Buffer.h"
 #include "model/Model.h"
+#include "Entity.h"
 
 class Canvas {
 
     UInt width;
     UInt height;
     Color color;
+    Texture *texture;
 
     glm::mat4 projectionMatrix;
 
 public:
     explicit Canvas(UInt width, UInt height);
+    ~Canvas();
 
     void setColor(Color const &color);
     /**
      * Draw a model on the screen applying x and y transforms to it.
      */
+    void setTexture(Texture &texture);
     void draw(Model &model, float x, float y, float width, float height);
     void clear();
 };

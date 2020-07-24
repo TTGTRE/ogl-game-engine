@@ -45,6 +45,7 @@ public:
 
     Texture &getTexture() const;
 
+    void setTexture(Texture &texture);
 
 protected:
     Entity(float x, float y, float width, float height);

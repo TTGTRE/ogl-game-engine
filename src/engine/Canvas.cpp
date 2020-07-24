@@ -14,8 +14,16 @@ Canvas::Canvas(UInt width, UInt height) : width(width), height(height) {
     projectionMatrix = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 }
 
+Canvas::~Canvas() {
+    delete texture;
+}
+
 void Canvas::setColor(Color const &color) {
     this->color = color;
+}
+
+void Canvas::setTexture(Texture &texture) {
+    this->texture = &texture;
 }
 
 void Canvas::draw(Model &model, float x, float y, float width, float height) {
@@ -28,7 +36,7 @@ void Canvas::draw(Model &model, float x, float y, float width, float height) {
     glEnableVertexAttribArray(0);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, model.getTexture().getId());
+    glBindTexture(GL_TEXTURE_2D, texture->getId());
 
     OpenGL::setUniform<float>(OpenGL::Uniform::COLOR, color[0], color[1], color[2]);
     OpenGL::setUniform<glm::mat4>(OpenGL::Uniform::PROJECTION, projectionMatrix);

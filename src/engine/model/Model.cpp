@@ -4,7 +4,7 @@
 
 #include "Model.h"
 
-Model::Model(Buffer *data, Texture *texture) : data(data), texture(texture) {
+Model::Model(Buffer *data) : data(data) {
 
 }
 
@@ -14,8 +14,4 @@ Model::~Model() {
 
 Buffer &Model::getData() const {
     return *data;
-}
-
-Texture &Model::getTexture() const {
-    return *texture;
 }
