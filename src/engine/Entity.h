@@ -21,8 +21,6 @@ class Entity {
     Model *model;
     Texture *texture;
 public:
-    ~Entity();
-
     float getX() const;
 
     float getY() const;

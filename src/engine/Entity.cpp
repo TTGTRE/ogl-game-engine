@@ -11,11 +11,6 @@ Entity::Entity(float x, float y, float width, float height) : x(x),
     color = Color(1.0f, 1.0f, 1.0f);
 }
 
-Entity::~Entity() {
-    delete model;
-    delete texture;
-}
-
 float Entity::getX() const {
     return x;
 }
