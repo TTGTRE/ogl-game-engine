@@ -14,7 +14,8 @@
 GLuint vaoArray[VAO_COUNT];
 
 Canvas *canvas;
-std::vector<Entity *> entities;
+
+std::vector<Entity> entities;
 
 void init(GLFWwindow *window) {
 
@@ -28,18 +29,18 @@ void init(GLFWwindow *window) {
     ResourceManager::loadResources();
 
     // Entity loading
-    entities.emplace_back(new SquareEntity(100, 100, 50, 50));
-    entities.emplace_back(new SquareEntity(100, 400, 200, 50));
+    entities.emplace_back(SquareEntity(100, 100, 50, 50));
+    entities.emplace_back(SquareEntity(100, 400, 200, 50));
 }
 
 void display(GLFWwindow *window, double currentTime) {
 
     canvas->clear();
 
-    for (Entity *entity : entities) {
-        canvas->setColor(entity->getColor());
-        canvas->setTexture(entity->getTexture());
-        canvas->draw(entity->getModel(), entity->getX(), entity->getY(), entity->getWidth(), entity->getHeight());
+    for (Entity const &entity : entities) {
+        canvas->setColor(entity.getColor());
+        canvas->setTexture(entity.getTexture());
+        canvas->draw(entity.getModel(), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
     }
 }
 
