@@ -1,6 +1,7 @@
 #include <glew.h>
 #include <glfw3.h>
 #include <vector>
+#include <thread>
 #include "engine/Entity.h"
 #include "engine/OpenGL.h"
 #include "SquareEntity.h"
@@ -9,6 +10,7 @@
 
 #define CANVAS_WIDTH 600
 #define CANVAS_HEIGHT 600
+#define SLEEP_DUR 20
 #define VAO_COUNT 1
 
 GLuint vaoArray[VAO_COUNT];
@@ -42,6 +44,8 @@ void display(GLFWwindow *window, double currentTime) {
         canvas->setTexture(entity.getTexture());
         canvas->draw(entity.getModel(), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_DUR));
 }
 
 int main() {
@@ -56,7 +60,9 @@ int main() {
     if (glewInit() != GLEW_OK) {
         exit(EXIT_FAILURE);
     }
+
     glfwSwapInterval(1);
+
     init(window);
 
     while (!glfwWindowShouldClose(window)) {
