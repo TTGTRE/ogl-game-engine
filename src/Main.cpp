@@ -31,8 +31,14 @@ void init(GLFWwindow *window) {
     ResourceManager::loadResources();
 
     // Entity loading
-    entities.emplace_back(SquareEntity(100, 100, 50, 50));
-    entities.emplace_back(SquareEntity(100, 400, 200, 50));
+    for (int i = 0; i < 10; i++) {
+        SquareEntity entity;
+        entity.setWidth(50);
+        entity.setHeight(50);
+        entity.setX(i * 50);
+        entity.setY(i * 50);
+        entities.emplace_back(entity);
+    }
 }
 
 void display(GLFWwindow *window, double currentTime) {

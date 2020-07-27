@@ -23,7 +23,11 @@ class Entity {
 public:
     float getX() const;
 
+    void setX(int x);
+
     float getY() const;
+
+    void setY(int y);
 
     float getWidth() const;
 
@@ -46,7 +50,7 @@ public:
     void setTexture(Texture &texture);
 
 protected:
-    Entity(float x, float y, float width, float height);
+    Entity(Model &model, Texture &texture);
 };
 
 

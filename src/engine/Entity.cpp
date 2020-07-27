@@ -4,10 +4,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(float x, float y, float width, float height) : x(x),
-                                                              y(y),
-                                                              width(width),
-                                                              height(height) {
+Entity::Entity(Model &model, Texture &texture) : model(&model), texture(&texture), x(0), y(0), width(10), height(10) {
     color = Color(1.0f, 1.0f, 1.0f);
 }
 
@@ -15,8 +12,16 @@ float Entity::getX() const {
     return x;
 }
 
+void Entity::setX(int x) {
+    this->x = x;
+}
+
 float Entity::getY() const {
     return y;
+}
+
+void Entity::setY(int y) {
+    this->y = y;
 }
 
 float Entity::getWidth() const {

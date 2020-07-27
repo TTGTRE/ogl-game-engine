@@ -5,7 +5,5 @@
 #include "TriangleEntity.h"
 #include "ResourceManager.h"
 
-TriangleEntity::TriangleEntity(float x, float y, float width, float height) : Entity(x, y, width, height) {
-    setModel(ResourceManager::TRIANGLE_MODEL);
-    setTexture(*ResourceManager::STARS_TEXTURE);
+TriangleEntity::TriangleEntity() : Entity(*ResourceManager::TRIANGLE_MODEL, *ResourceManager::STARS_TEXTURE) {
 }

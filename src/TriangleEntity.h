@@ -10,7 +10,7 @@
 
 class TriangleEntity : public Entity {
 public:
-    TriangleEntity(float x, float y, float width, float height);
+    TriangleEntity();
 };
 
 
