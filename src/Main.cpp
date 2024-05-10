@@ -1,5 +1,5 @@
-#include <glew.h>
-#include <glfw3.h>
+#include <GL/glew.h>
+#include "glfw3.h"
 #include <vector>
 #include <thread>
 #include "engine/Entity.h"

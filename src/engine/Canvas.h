@@ -5,7 +5,7 @@
 #ifndef OGLEXPERIMENTS_CANVAS_H
 #define OGLEXPERIMENTS_CANVAS_H
 
-#include <glew.h>
+#include <GL/glew.h>
 #include <vector>
 #include "Types.h"
 #include "Color.h"

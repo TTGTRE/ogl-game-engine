@@ -14,7 +14,7 @@ public:
     explicit Texture(GLuint id);
     GLuint getId() const;
 
-    static Texture *load(String path);
+    static Texture *load(std::string const &path);
 };
 
 

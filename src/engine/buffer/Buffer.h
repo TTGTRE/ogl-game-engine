@@ -5,8 +5,9 @@
 #ifndef OGLEXPERIMENTS_BUFFER_H
 #define OGLEXPERIMENTS_BUFFER_H
 
-#include <glew.h>
+#include <GL/glew.h>
 #include <vector>
+#include <string>
 #include "../Types.h"
 
 class Buffer {
@@ -24,7 +25,7 @@ public:
 
     UInt getIndex() const;
 
-    static Buffer *Buffer::load(String path);
+    static Buffer *Buffer::load(std::string const &path);
 };
 
 

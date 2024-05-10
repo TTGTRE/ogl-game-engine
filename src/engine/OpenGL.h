@@ -23,18 +23,18 @@ namespace OpenGL {
     UInt fillBuffer(UInt bufferSize, float const *bufferData);
 
     namespace Uniform {
-        static String COLOR = "uColor";
-        static String PROJECTION = "uProjection";
-        static String MODEL = "uModel";
+        static std::string const &COLOR = "uColor";
+        static std::string const &PROJECTION = "uProjection";
+        static std::string const &MODEL = "uModel";
     }
 
     extern Shader vertexShader;
     extern Shader fragmentShader;
     extern ShaderProgram shaderProgram;
 
-    void setVertexShader(String path);
+    void setVertexShader(std::string const &path);
 
-    void setFragmentShader(String path);
+    void setFragmentShader(std::string const &path);
 
     void createShaderProgram();
 
@@ -48,16 +48,16 @@ namespace OpenGL {
 
     bool getCompileStatus(Shader shader);
 
-    std::string readShaderSource(const char *filePath);
+    std::string readShaderSource(std::string const &filePath);
 
     template<class T>
-    void setUniform(String uniform, float value);
+    void setUniform(std::string const &uniform, float value);
 
     template<class T>
-    void setUniform(String uniform, float value1, float value2, float value3);
+    void setUniform(std::string const &uniform, float value1, float value2, float value3);
 
     template<class T>
-    void setUniform(String uniform, glm::mat4 matrix4f);
+    void setUniform(std::string const &uniform, glm::mat4 matrix4f);
 }
 
 

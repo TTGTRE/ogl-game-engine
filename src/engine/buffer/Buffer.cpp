@@ -24,7 +24,7 @@ UInt Buffer::getIndex() const {
     return index;
 }
 
-Buffer *Buffer::load(String path) {
+Buffer *Buffer::load(std::string const &path) {
     std::ifstream stream(path, std::ios::in);
     if (!stream)
         std::cout << "Error opening file: " << path << "\n";

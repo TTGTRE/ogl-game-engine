@@ -3,7 +3,7 @@
 //
 
 #include "OpenGL.h"
-#include <glew.h>
+#include <GL/glew.h>
 #include <iostream>
 #include <fstream>
 #include <detail/type_mat4x4.hpp>
@@ -30,10 +30,10 @@ UInt OpenGL::fillBuffer(UInt bufferSize, float const *bufferData) {
     return nextIndex++;
 }
 
-void OpenGL::setVertexShader(String path) {
+void OpenGL::setVertexShader(std::string const &path) {
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     std::string ss = OpenGL::readShaderSource(path);
-    String shaderString = ss.c_str();
+    char const *shaderString = ss.c_str();
     glShaderSource(vertexShader, 1, &shaderString, NULL);
     glCompileShader(vertexShader);
     bool vertex_status = OpenGL::getCompileStatus(vertexShader);
@@ -41,10 +41,10 @@ void OpenGL::setVertexShader(String path) {
     OpenGL::checkOpenGLError();
 }
 
-void OpenGL::setFragmentShader(String path) {
+void OpenGL::setFragmentShader(std::string const &path) {
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     std::string ss = OpenGL::readShaderSource(path);
-    String shaderString = ss.c_str();
+    char const *shaderString = ss.c_str();
     glShaderSource(fragmentShader, 1, &shaderString, NULL);
     glCompileShader(fragmentShader);
     bool vertex_status = OpenGL::getCompileStatus(fragmentShader);
@@ -52,7 +52,7 @@ void OpenGL::setFragmentShader(String path) {
     OpenGL::checkOpenGLError();
 }
 
-std::string OpenGL::readShaderSource(const char *filePath) {
+std::string OpenGL::readShaderSource(std::string const &filePath) {
     std::string content;
     std::ifstream file_stream(filePath, std::ios::in);
     std::string line;
@@ -122,19 +122,19 @@ void OpenGL::useDefaultShaderProgram() {
 }
 
 template<>
-void OpenGL::setUniform<float>(String uniform, float value) {
-    GLuint location = glGetUniformLocation(shaderProgram, uniform);
+void OpenGL::setUniform<float>(std::string const &uniform, float value) {
+    GLuint location = glGetUniformLocation(shaderProgram, uniform.c_str());
     glUniform1f(location, value);
 }
 
 template<>
-void OpenGL::setUniform<float>(String uniform, float value1, float value2, float value3) {
-    GLuint location = glGetUniformLocation(shaderProgram, uniform);
+void OpenGL::setUniform<float>(std::string const &uniform, float value1, float value2, float value3) {
+    GLuint location = glGetUniformLocation(shaderProgram, uniform.c_str());
     glUniform3f(location, value1, value2, value3);
 }
 
 template<>
-void OpenGL::setUniform<glm::mat4>(String uniform, glm::mat4 matrix4f) {
-    GLuint location = glGetUniformLocation(shaderProgram, uniform);
+void OpenGL::setUniform<glm::mat4>(std::string const &uniform, glm::mat4 matrix4f) {
+    GLuint location = glGetUniformLocation(shaderProgram, uniform.c_str());
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix4f));
 }

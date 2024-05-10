@@ -5,7 +5,7 @@
 #ifndef OGLE_TEXTURE_UTILS_H
 #define OGLE_TEXTURE_UTILS_H
 
-#include <glew.h>
+#include <GL/glew.h>
 
 namespace TextureUtils {
     GLuint loadTexture(char const *texImagePath);
